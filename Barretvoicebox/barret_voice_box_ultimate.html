@@ -2,76 +2,70 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>バレット ボイスBOX アルティメット</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="p-2 sm:p-4 w-full min-h-[100dvh] flex flex-col justify-center">
+<body>
     <!-- ポータルへ戻るナビゲーションバー -->
-    <div class="w-full max-w-5xl mx-auto mb-2 flex items-center justify-between">
-        <a href="../index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-blue-950/80 hover:bg-blue-900 border border-blue-400/50 text-cyan-300 hover:text-white text-xs sm:text-sm font-bold shadow transition-all duration-200">
+    <div class="nav-bar">
+        <a href="../index.html" class="back-btn">
             <span>◀</span>
             <span>ポータルメニューに戻る</span>
         </a>
-        <span class="text-[11px] sm:text-xs text-gray-400 font-mono">ISERITOOL HUB / FFVII</span>
+        <span class="nav-tag">ISERITOOL HUB / FFVII</span>
     </div>
 
-    <div class="ff7-window w-full max-w-5xl mx-auto p-3 sm:p-6 flex flex-col h-[calc(100dvh-55px)] min-h-[500px]" id="main-window">
+    <!-- メインウィンドウ -->
+    <div class="ff7-window" id="main-window">
         <!-- ヘッダー部分 -->
-        <div class="flex flex-row items-center border-b-2 border-gray-400 pb-3 sm:pb-4 gap-3 sm:gap-6 shrink-0">
-            <!-- バレットのアイコン (画像切り替え機能付き) -->
-            <div class="flex flex-col items-center gap-1 shrink-0">
-                <div id="portrait-container" class="w-16 h-16 sm:w-24 sm:h-24 bg-black border-2 border-gray-400 rounded flex items-center justify-center flex-shrink-0 transition-all duration-300 shadow-lg overflow-hidden cursor-pointer relative group" title="クリックで画像切り替え" onclick="cycleIcon()">
-                    <!-- 画像表示用の要素 -->
-                    <img id="portrait-img" src="" alt="Barret Icon" class="w-full h-full object-cover hidden" onerror="this.style.display='none'; document.getElementById('portrait-svg').style.display='block';">
-                    
-                    <!-- 画像が読み込めなかった場合や未設定時のSVGフォールバック -->
-                    <svg id="portrait-svg" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 sm:w-[50px] sm:h-[50px]">
+        <div class="barret-header">
+            <!-- バレットアイコン -->
+            <div class="portrait-wrapper">
+                <div id="portrait-container" class="portrait-box" title="クリックで画像切り替え" onclick="cycleIcon()">
+                    <img id="portrait-img" src="" alt="Barret Icon" style="display: none;" onerror="this.style.display='none'; document.getElementById('portrait-svg').style.display='block';">
+                    <svg id="portrait-svg" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #9ca3af;">
                         <circle cx="12" cy="8" r="5"></circle>
                         <path d="M3 21v-2a7 7 0 0 1 7-7h4a7 7 0 0 1 7 7v2"></path>
                         <line x1="21" y1="12" x2="21" y2="21" stroke-width="4" stroke="gray"></line>
                     </svg>
-
-                    <!-- ホバー時のヒント -->
-                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span class="text-[10px] sm:text-xs text-white text-center">CHANGE<br>ICON</span>
+                    <div class="portrait-hover-hint">
+                        <span>CHANGE<br>ICON</span>
                     </div>
                 </div>
-                <div class="text-[8px] sm:text-[10px] text-gray-400 tracking-wider">TAP TO CHANGE</div>
+                <div class="portrait-tip">TAP TO CHANGE</div>
             </div>
             
-            <div class="flex-grow min-w-0">
-                <div class="flex justify-between items-baseline mb-1 border-b border-gray-600 pb-1">
-                    <h1 class="text-base sm:text-2xl font-bold tracking-wider text-white truncate">
-                        BARRET <span class="text-xs text-gray-400 hidden xs:inline">Ultimate</span>
-                    </h1>
-                    <span class="text-xs sm:text-lg text-yellow-300 font-bold ml-2">LV 99</span>
+            <!-- ステータス情報 -->
+            <div class="status-info">
+                <div class="status-title-row">
+                    <h1 class="char-name">BARRET WALLACE <span class="char-name-sub">Ultimate</span></h1>
+                    <span class="char-level">LV 99</span>
                 </div>
-                <div class="flex flex-wrap gap-x-4 gap-y-0.5 text-xs sm:text-base">
-                    <div><span class="text-gray-400">HP</span> <span class="text-white font-mono">9999</span>/9999</div>
-                    <div><span class="text-gray-400">MP</span> <span class="text-white font-mono">250</span>/250</div>
-                    <div class="ml-auto hidden md:block text-gray-300 text-xs">TOTAL: 100 VOICES</div>
+                <div class="stats-row">
+                    <div><span class="stat-label">HP</span> <span>9999</span>/9999</div>
+                    <div><span class="stat-label">MP</span> <span>250</span>/250</div>
+                    <div class="stat-total">TOTAL: 100 VOICES</div>
                 </div>
-                <div class="mt-1 h-5 sm:h-6 overflow-hidden">
-                    <p class="text-xs sm:text-base text-yellow-300 truncate" id="status-text">▶ SELECT VOICE</p>
+                <div class="status-message-box">
+                    <p class="status-message" id="status-text">▶ SELECT VOICE</p>
                 </div>
             </div>
         </div>
 
-        <!-- ボイスリスト表示エリア (スクロール可能) -->
-        <div class="flex-grow overflow-y-auto my-2 sm:my-4 pr-1 sm:pr-2" id="scroll-area">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2" id="voice-list-container">
+        <!-- ボイスリスト表示エリア -->
+        <div class="voice-scroll-area" id="scroll-area">
+            <div class="voice-grid" id="voice-list-container">
                 <!-- JavaScriptで動的にボタンが生成されます -->
             </div>
         </div>
 
-        <!-- ページネーション（ページ切り替え） -->
-        <div class="shrink-0 flex flex-col items-center gap-2 border-t-2 border-gray-400 pt-3">
-            <div class="flex flex-wrap justify-center gap-1 sm:gap-2 w-full" id="pagination-container">
+        <!-- ページネーション -->
+        <div class="pagination-area">
+            <div class="pagination-controls" id="pagination-container">
                 <!-- JavaScriptで動的に生成されます -->
             </div>
-            <div class="text-center text-xs text-gray-400 mt-1">
+            <div class="pagination-note">
                 ※音声はブラウザの合成音声です。デバイスの音量を上げてお楽しみください。
             </div>
         </div>

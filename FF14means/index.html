@@ -1,12 +1,271 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="modern">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=code_artifact.html">
-    <title>リダイレクト中 - クラフト・金策利益計算ツール</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>ゲーム向け クラフト・金策利益計算ツール</title>
+    
+    <!-- ファビコン (ダイヤのSVGアイコン) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22><path fill=%22%23f0deab%22 d=%22M116.7 33.8c4.5-6.1 11.7-9.8 19.3-9.8H376c7.6 0 14.8 3.6 19.3 9.8l112 152c6.8 9.2 6.1 21.9-1.5 30.4l-232 256c-4.5 5-11 7.9-17.8 7.9s-13.2-2.9-17.8-7.9l-232-256c-7.7-8.5-8.3-21.2-1.5-30.4l112-152z%22/></svg>">
+    
+    <!-- Icons & Pure CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body style="background:#121212; color:#f0deab; font-family:sans-serif; text-align:center; padding-top:50px;">
-    <p>クラフト・金策利益計算ツールへ移動中...</p>
-    <p><a href="code_artifact.html" style="color:#8ce863;">自動的に切り替わらない場合はこちらをクリック</a></p>
+<body>
+
+    <!-- ポータルへ戻るナビゲーションバー -->
+    <div class="nav-bar">
+        <a href="../index.html" class="ff-button back-btn">
+            <i class="fas fa-chevron-left mr-1"></i>
+            <span>ポータルメニューに戻る</span>
+        </a>
+        <span class="theme-text-muted" style="font-size: 11px; font-family: monospace;">ISERITOOL HUB / FFXIV</span>
+    </div>
+
+    <!-- メインコンテナ -->
+    <div class="app-container">
+        
+        <!-- ヘッダーエリア -->
+        <header class="ff-window mb-4">
+            <div class="ff-header p-3 px-4 flex flex-wrap justify-between items-center gap-2" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-coins ff-text-gold" style="font-size: 1.25rem;"></i>
+                    <h1 style="font-weight: 700; font-size: 1.15rem; letter-spacing: 0.5px;">クラフト・金策利益計算ツール</h1>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <!-- テーマ切り替え -->
+                    <div class="theme-panel" style="display: flex; padding: 2px; border-radius: 4px; gap: 2px;">
+                        <button onclick="applyTheme('modern')" data-theme-name="modern" class="theme-btn ff-button" style="padding: 4px 8px; font-size: 11px;" title="モダン">モダン</button>
+                        <button onclick="applyTheme('classic')" data-theme-name="classic" class="theme-btn ff-button" style="padding: 4px 8px; font-size: 11px;" title="クラシック">クラシック</button>
+                        <button onclick="applyTheme('light')" data-theme-name="light" class="theme-btn ff-button" style="padding: 4px 8px; font-size: 11px;" title="ライト">ライト</button>
+                    </div>
+                    <!-- 設定ボタン -->
+                    <button onclick="openSettingsModal()" class="ff-button" style="padding: 6px 12px;" title="設定"><i class="fas fa-cog"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <!-- タブ切り替え -->
+        <div class="tabs-container">
+            <button onclick="switchTab('calc')" id="tab-btn-calc" class="ff-tab ff-tab-active"><i class="fas fa-calculator mr-2"></i>利益計算</button>
+            <button onclick="switchTab('history')" id="tab-btn-history" class="ff-tab"><i class="fas fa-history mr-2"></i>保存履歴</button>
+            <button onclick="switchTab('compare')" id="tab-btn-compare" class="ff-tab"><i class="fas fa-balance-scale mr-2"></i>レシピ比較</button>
+        </div>
+
+        <!-- 1. 利益計算タブ -->
+        <div id="tab-content-calc" class="tab-content">
+            
+            <div class="grid-cols-2">
+                
+                <!-- 左カラム：入力セクション -->
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                    
+                    <!-- 完成品・販売価格設定 -->
+                    <div class="ff-window" style="padding: 14px;">
+                        <div class="ff-header" style="margin: -14px -14px 12px -14px; padding: 8px 12px; font-weight: 700; font-size: 14px;">
+                            <i class="fas fa-box-open mr-1 ff-text-gold"></i>完成品・販売設定
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <div>
+                                <label class="theme-text-muted" style="font-size: 12px; display: block; margin-bottom: 4px;">製作アイテム名</label>
+                                <input type="text" id="product-name" placeholder="例: ハイダリウム・インゴット" class="ff-input" style="width: 100%; padding: 8px; font-size: 14px;">
+                            </div>
+                            <div>
+                                <label class="theme-text-muted" style="font-size: 12px; display: block; margin-bottom: 4px;">想定販売価格（マーケット単価）</label>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="ff-text-gold" style="font-weight: 700;">¥</span>
+                                    <input type="number" min="0" step="any" id="selling-price" placeholder="0" oninput="if(this.value<0)this.value=0; calculate()" class="ff-input" style="width: 100%; padding: 8px; font-size: 15px; font-weight: 700;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 材料一覧 -->
+                    <div class="ff-window" style="padding: 14px;">
+                        <div class="ff-header" style="margin: -14px -14px 12px -14px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: 700; font-size: 14px;"><i class="fas fa-cubes mr-1 ff-text-gold"></i>素材・材料</span>
+                            <span class="theme-text-muted" style="font-size: 12px;">小計: ¥<span id="total-material-cost" style="font-weight: 700; color: #fff;">0</span></span>
+                        </div>
+                        <div id="materials-container" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;"></div>
+                        <button onclick="addMaterialRow('', 0, 1, false)" class="ff-button" style="width: 100%; padding: 8px; font-size: 13px;"><i class="fas fa-plus mr-1"></i>素材を追加</button>
+                    </div>
+
+                    <!-- 触媒（クリスタル）一覧 -->
+                    <div class="ff-window" style="padding: 14px;">
+                        <div class="ff-header" style="margin: -14px -14px 12px -14px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: 700; font-size: 14px;"><i class="fas fa-gem mr-1 ff-text-gold"></i>触媒 (クリスタル等)</span>
+                            <span class="theme-text-muted" style="font-size: 12px;">小計: ¥<span id="total-catalyst-cost" style="font-weight: 700; color: #fff;">0</span></span>
+                        </div>
+                        <div id="catalysts-container" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;"></div>
+                        <button onclick="addCatalystRow('ファイア', 'クリスタル', 50, 1, false)" class="ff-button" style="width: 100%; padding: 8px; font-size: 13px;"><i class="fas fa-plus mr-1"></i>触媒を追加</button>
+                    </div>
+
+                </div>
+
+                <!-- 右カラム：計算結果・シミュレーション -->
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                    
+                    <div class="ff-window" style="padding: 16px;">
+                        <div class="ff-header" style="margin: -16px -16px 14px -16px; padding: 10px 14px; font-weight: 700; font-size: 15px;">
+                            <i class="fas fa-chart-line mr-1 ff-text-gold"></i>利益シミュレーション
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="calc-table">
+                                <thead>
+                                    <tr class="theme-text-muted" style="border-bottom: 1px dashed var(--panel-border);">
+                                        <th>項目</th>
+                                        <th style="text-align: right;">1個</th>
+                                        <th style="text-align: right;">1セット (99個)</th>
+                                        <th style="text-align: right;">全ロット (20枠)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--panel-border);">
+                                        <td>売上</td>
+                                        <td style="text-align: right;">¥<span id="calc-rev-1">0</span></td>
+                                        <td style="text-align: right;">¥<span id="calc-rev-lot">0</span></td>
+                                        <td style="text-align: right;">¥<span id="calc-rev-total">0</span></td>
+                                    </tr>
+                                    <tr class="theme-text-muted" style="border-bottom: 1px solid var(--panel-border);">
+                                        <td>手数料 (<span class="setting-tax-rate-display">5</span>%)</td>
+                                        <td style="text-align: right;">-¥<span id="calc-fee-1">0</span></td>
+                                        <td style="text-align: right;">-¥<span id="calc-fee-lot">0</span></td>
+                                        <td style="text-align: right;">-¥<span id="calc-fee-total">0</span></td>
+                                    </tr>
+                                    <tr class="theme-text-muted" style="border-bottom: 1px solid var(--panel-border);">
+                                        <td>原価</td>
+                                        <td style="text-align: right;">-¥<span id="calc-cost-1">0</span></td>
+                                        <td style="text-align: right;">-¥<span id="calc-cost-lot">0</span></td>
+                                        <td style="text-align: right;">-¥<span id="calc-cost-total">0</span></td>
+                                    </tr>
+                                    <tr style="font-weight: 700; font-size: 15px;">
+                                        <td>見込利益</td>
+                                        <td style="text-align: right;" class="ff-text-green">¥<span id="calc-profit-1">0</span></td>
+                                        <td style="text-align: right;" class="ff-text-green">¥<span id="calc-profit-lot">0</span></td>
+                                        <td style="text-align: right;" class="ff-text-green">¥<span id="calc-profit-total">0</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- 利益率 & 原価率 -->
+                        <div class="theme-panel-dark" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; border-radius: 4px; text-align: center; margin-top: 16px;">
+                            <div>
+                                <div class="theme-text-muted" style="font-size: 11px; margin-bottom: 4px;">利益率</div>
+                                <div class="ff-text-green" style="font-weight: 700; font-size: 1.4rem; font-family: monospace;"><span id="summary-profit-margin">0.0</span>%</div>
+                            </div>
+                            <div>
+                                <div class="theme-text-muted" style="font-size: 11px; margin-bottom: 4px;">原価率</div>
+                                <div class="ff-text-gold" style="font-weight: 700; font-size: 1.4rem; font-family: monospace;"><span id="summary-cost-margin">0.0</span>%</div>
+                            </div>
+                        </div>
+
+                        <!-- アドバイス -->
+                        <div id="profit-advice" class="hidden"></div>
+
+                        <!-- 保存 & 新規作成ボタン -->
+                        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                            <div id="overwrite-container" class="hidden" style="display: flex; align-items: center; gap: 6px; font-size: 12px;">
+                                <input type="checkbox" id="overwrite-check" class="ff-checkbox">
+                                <label for="overwrite-check" style="cursor: pointer;">読み込んだ履歴を上書き保存する</label>
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <button onclick="saveToHistory()" id="btn-save-history" class="ff-button ff-button-primary" style="flex: 1; padding: 10px; font-weight: 700;"><i class="fas fa-save mr-2"></i>履歴に保存</button>
+                                <button onclick="createNew()" class="ff-button" style="padding: 10px 14px;"><i class="fas fa-file mr-1"></i>新規</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- 2. 保存履歴タブ -->
+        <div id="tab-content-history" class="tab-content hidden">
+            <div class="ff-window" style="padding: 16px;">
+                <div class="ff-header" style="margin: -16px -16px 16px -16px; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: 700;"><i class="fas fa-history mr-1 ff-text-gold"></i>保存済みレシピ一覧</span>
+                    <button onclick="clearHistory()" class="ff-button ff-button-danger" style="font-size: 11px; padding: 4px 8px;"><i class="fas fa-trash-alt mr-1"></i>全履歴削除</button>
+                </div>
+                <div id="history-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;">
+                    <div id="empty-history-msg" class="theme-panel-dark" style="grid-column: 1 / -1; padding: 36px; text-align: center; border-radius: 4px; border: var(--panel-border-dotted);">
+                        <i class="fas fa-folder-open ff-text-gold" style="font-size: 32px; margin-bottom: 10px;"></i>
+                        <p style="font-size: 14px; color: var(--text-muted);">保存されたレシピデータはありません</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. レシピ比較タブ -->
+        <div id="tab-content-compare" class="tab-content hidden">
+            <div class="ff-window" style="padding: 16px;">
+                <div class="ff-header" style="margin: -16px -16px 16px -16px; padding: 10px 16px; font-weight: 700;">
+                    <i class="fas fa-balance-scale mr-1 ff-text-gold"></i>レシピ比較シミュレーター
+                </div>
+                <div class="grid-cols-2" style="margin-bottom: 16px;">
+                    <div>
+                        <label class="theme-text-muted" style="font-size: 12px; display: block; margin-bottom: 4px;">レシピ A</label>
+                        <select id="compare-select-1" onchange="updateCompareView()" class="ff-input" style="width: 100%; padding: 8px; font-size: 13px;"></select>
+                    </div>
+                    <div>
+                        <label class="theme-text-muted" style="font-size: 12px; display: block; margin-bottom: 4px;">レシピ B</label>
+                        <select id="compare-select-2" onchange="updateCompareView()" class="ff-input" style="width: 100%; padding: 8px; font-size: 13px;"></select>
+                    </div>
+                </div>
+                <div id="compare-result-container" class="grid-cols-2"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 設定モーダル -->
+    <div id="settings-modal" class="modal-overlay hidden">
+        <div class="ff-window" style="width: 100%; max-width: 420px; padding: 20px;">
+            <div class="ff-header" style="margin: -20px -20px 16px -20px; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 700;"><i class="fas fa-cog mr-1 ff-text-gold"></i>計算設定</span>
+                <button onclick="closeSettingsModal()" class="ff-button" style="padding: 2px 6px;"><i class="fas fa-times"></i></button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+                <div>
+                    <label class="theme-text-muted" style="font-size: 12px; display: block; margin-bottom: 4px;">マーケット手数料率 (%)</label>
+                    <input type="number" id="setting-tax-rate" min="0" max="100" step="0.1" class="ff-input" style="width: 100%; padding: 8px;">
+                </div>
+                <div>
+                    <label class="theme-text-muted" style="font-size: 12px; display: block; margin-bottom: 4px;">1セットあたりの個数</label>
+                    <input type="number" id="setting-lot-size" min="1" max="999" class="ff-input" style="width: 100%; padding: 8px;">
+                </div>
+                <div>
+                    <label class="theme-text-muted" style="font-size: 12px; display: block; margin-bottom: 4px;">リテイナー出品枠数</label>
+                    <input type="number" id="setting-lot-count" min="1" max="100" class="ff-input" style="width: 100%; padding: 8px;">
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px;">
+                    <button onclick="closeSettingsModal()" class="ff-button" style="padding: 8px 16px;">キャンセル</button>
+                    <button onclick="saveSettings()" class="ff-button ff-button-primary" style="padding: 8px 16px; font-weight: 700;">設定を保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 確認モーダル -->
+    <div id="confirm-modal" class="modal-overlay hidden">
+        <div class="ff-window" style="width: 100%; max-width: 380px; padding: 20px; text-align: center;">
+            <i class="fas fa-question-circle ff-text-gold" style="font-size: 36px; margin-bottom: 12px;"></i>
+            <div id="confirm-message" style="font-size: 14px; margin-bottom: 20px; line-height: 1.5;"></div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button onclick="closeConfirm(false)" class="ff-button" style="padding: 8px 20px;">キャンセル</button>
+                <button onclick="closeConfirm(true)" class="ff-button ff-button-primary" style="padding: 8px 20px; font-weight: 700;">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 外部スクリプトの読み込み -->
+    <script src="js/data.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

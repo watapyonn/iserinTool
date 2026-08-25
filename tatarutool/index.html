@@ -2,11 +2,151 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=code_artifact (1).html">
-    <title>リダイレクト中 - タタル・タルなりきり変換ツール</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>タタル・タルなりきり変換ツールでっす！</title>
+    
+    <!-- Lightweight Pure CSS -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body style="background:#FFF5F4; color:#C27A71; font-family:sans-serif; text-align:center; padding-top:50px;">
-    <p>タタル・タルなりきり変換ツールへ移動中でっす！</p>
-    <p><a href="code_artifact (1).html" style="color:#E69F96;">自動的に切り替わらない場合はこちらをクリック</a></p>
+<body>
+
+    <!-- ポータルへ戻るナビゲーションバー -->
+    <div class="nav-bar">
+        <a href="../index.html" class="back-btn">
+            <span>◀</span>
+            <span>ポータルメニューに戻る</span>
+        </a>
+        <span class="nav-tag font-cute">ISERITOOL HUB / FFXIV</span>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <div class="main-wrapper">
+        
+        <!-- ヘッダー -->
+        <header class="tataru-header">
+            <h1 class="font-cute title-pop">
+                タタルになり切り<br style="display: none;">変換ツールでっす
+            </h1>
+            <p class="header-badge">
+                入力した文章を自動的に「暁の金庫番」風に変換いたしまっす！
+            </p>
+        </header>
+
+        <!-- メイン変換エリア -->
+        <main class="content-grid">
+            
+            <!-- キャラクターアイコンエリア -->
+            <div class="char-area">
+                <div class="char-circle" onclick="document.getElementById('image-upload').click()">
+                    <img id="char-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='100' fill='%23F5D3CF'/%3E%3Ctext x='50%25' y='45%25' font-size='60' text-anchor='middle' dominant-baseline='central'%3E🌸%3C/text%3E%3Ctext x='50%25' y='75%25' font-size='18' font-weight='bold' fill='%23C27A71' text-anchor='middle' font-family='sans-serif'%3ETATARU%3C/text%3E%3C/svg%3E" alt="タタル・タル">
+                    <div class="char-upload-hint">
+                        <span class="upload-pill">画像を変更</span>
+                    </div>
+                </div>
+                <input type="file" id="image-upload" style="display: none;" accept="image/*" onchange="previewImage(event)">
+                
+                <div class="char-title-box">
+                    <p class="font-cute char-name">タタル・タル</p>
+                    <p class="char-role">暁の血盟 受付・金庫番</p>
+                </div>
+            </div>
+
+            <!-- 翻訳ボックスエリア -->
+            <div class="trans-area">
+                
+                <!-- 出力ボックス（吹き出し風） -->
+                <div id="output-container" class="speech-bubble">
+                    <h2 class="output-header font-cute">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                        </svg>
+                        タタル語（変換結果）
+                    </h2>
+                    <div id="output-text" class="output-body output-placeholder font-cute">ここに変換された文章が表示されまっす！</div>
+                    
+                    <div class="output-footer">
+                        <button onclick="copyToClipboard()" class="copy-btn font-cute">
+                            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                            </svg>
+                            コピーするでっす！
+                        </button>
+                        <div id="copy-toast" class="copy-toast">コピーしまっした！</div>
+                    </div>
+                </div>
+
+                <!-- 入力ボックス -->
+                <div class="input-box">
+                    <div class="input-header">
+                        <h2 class="input-title">元の文章を入力してくだっさい</h2>
+                        <button onclick="setRandomQuote()" class="random-btn">
+                            <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                            </svg>
+                            ランダムなセリフ
+                        </button>
+                    </div>
+                    <textarea 
+                        id="input-text" 
+                        class="trans-textarea"
+                        placeholder="ここに文章を入力します。&#10;例：冒険者さん、こんにちは。準備はできましたか？"
+                        oninput="convertText()"
+                    ></textarea>
+                </div>
+                
+            </div>
+        </main>
+
+        <!-- 特製タタル辞書（アコーディオン） -->
+        <details class="dict-details">
+            <summary class="dict-summary">
+                <div class="dict-summary-title">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <span>変換の法則（特製タタル辞書）を見るでっす！</span>
+                </div>
+                <span class="dict-arrow">
+                    <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6"></path></svg>
+                </span>
+            </summary>
+            
+            <div class="dict-content">
+                <div class="dict-grid">
+                    <!-- 基本の語尾 -->
+                    <div class="dict-section-title">基本の語尾</div>
+                    <div class="dict-item"><span class="dict-from">です</span> ➡️ <span class="dict-to">でっす</span></div>
+                    <div class="dict-item"><span class="dict-from">ます</span> ➡️ <span class="dict-to">まっす</span></div>
+                    <div class="dict-item"><span class="dict-from">でした</span> ➡️ <span class="dict-to">でっした</span></div>
+                    <div class="dict-item"><span class="dict-from">ました</span> ➡️ <span class="dict-to">まっした</span></div>
+                    <div class="dict-item"><span class="dict-from">ません</span> ➡️ <span class="dict-to">まっせん</span></div>
+                    <div class="dict-item"><span class="dict-from">ください</span> ➡️ <span class="dict-to">くだっさい</span></div>
+                    
+                    <!-- 挨拶・日常会話 -->
+                    <div class="dict-section-title">挨拶・日常会話</div>
+                    <div class="dict-item"><span class="dict-from">おはよう</span> ➡️ <span class="dict-to">おはようございまっす</span></div>
+                    <div class="dict-item"><span class="dict-from">こんにちは</span> ➡️ <span class="dict-to">こんにちはでっす</span></div>
+                    <div class="dict-item"><span class="dict-from">ありがとう</span> ➡️ <span class="dict-to">ありがとうございまっす</span></div>
+                    <div class="dict-item"><span class="dict-from">よろしく</span> ➡️ <span class="dict-to">よろしくお願いしまっす</span></div>
+                    <div class="dict-item"><span class="dict-from">お疲れ</span> ➡️ <span class="dict-to">お疲れ様でっす</span></div>
+                    <div class="dict-item"><span class="dict-from">はい / いいえ</span> ➡️ <span class="dict-to">はいでっす / いいえでっす</span></div>
+                    
+                    <!-- 暁の金庫番 特有のセリフ -->
+                    <div class="dict-section-title">暁の金庫番 特有のセリフ</div>
+                    <div class="dict-item"><span class="dict-from">がんばって</span> ➡️ <span class="dict-to" style="color: var(--tataru-pink);">ご武運を祈ってまっす</span></div>
+                    <div class="dict-item"><span class="dict-from">儲かる</span> ➡️ <span class="dict-to" style="color: var(--tataru-pink);">大繁盛でっす</span></div>
+                    <div class="dict-item"><span class="dict-from">お茶</span> ➡️ <span class="dict-to" style="color: var(--tataru-pink);">お茶を淹れまっすね</span></div>
+                    <div class="dict-item"><span class="dict-from">任せて</span> ➡️ <span class="dict-to">ドーンとお任せくださいでっす！</span></div>
+                    <div class="dict-item"><span class="dict-from">わかった</span> ➡️ <span class="dict-to">了解でっす！</span></div>
+                    <div class="dict-item"><span class="dict-from">大変</span> ➡️ <span class="dict-to">たたた、大変でっす！</span></div>
+                </div>
+                <p class="dict-note">※句読点（。、！？）や改行の前にある言葉が主に変換されまっす。漢字表記にも対応していまっす！</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- 外部スクリプトの読み込み -->
+    <script src="js/dictionary.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
