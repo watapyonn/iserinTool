@@ -24,5 +24,5 @@
 公開URLにアクセスするだけでブラウザから直接ご利用いただけます。
 
 ```
-https://<username>.github.io/<repository-name>/
+https://watapyonn.github.io/iserinTool/
 ```
