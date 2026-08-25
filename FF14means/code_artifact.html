@@ -282,91 +282,91 @@
 <body class="min-h-screen pb-12">
 
 <!-- ポータルへ戻るナビゲーションバー -->
-<div class="max-w-5xl mx-auto px-4 pt-4 mb-2 flex items-center justify-between">
-    <a href="../index.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded ff-button text-xs sm:text-sm font-bold shadow transition-all duration-200" style="color: var(--text-gold);">
+<div class="max-w-5xl mx-auto px-3 sm:px-4 pt-3 sm:pt-4 mb-2 flex items-center justify-between">
+    <a href="../index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded ff-button text-xs sm:text-sm font-bold shadow transition-all duration-200" style="color: var(--text-gold);">
         <span>◀</span>
         <span>ポータルメニューに戻る</span>
     </a>
-    <span class="text-xs font-mono" style="color: var(--text-muted);">ISERITOOL HUB / FFXIV CRAFT</span>
+    <span class="text-[11px] sm:text-xs font-mono" style="color: var(--text-muted);">ISERITOOL HUB / FFXIV CRAFT</span>
 </div>
 
-<div id="app" class="max-w-5xl mx-auto p-4 md:p-6 lg:p-8">
+<div id="app" class="max-w-5xl mx-auto p-3 sm:p-6 lg:p-8">
     
     <!-- ヘッダー -->
-    <header class="mb-6 flex justify-between items-center ff-window">
-        <div class="ff-header w-full p-4 flex justify-between items-center">
+    <header class="mb-4 sm:mb-6 flex justify-between items-center ff-window">
+        <div class="ff-header w-full p-3.5 sm:p-4 flex justify-between items-center">
             <div>
-                <h1 class="text-2xl font-bold ff-text-gold"><i class="fas fa-gem mr-2"></i>利益計算ツール</h1>
-                <p class="text-xs mt-1 theme-text-muted">マケボ出品手数料や自家調達を考慮した利益シミュレーション</p>
+                <h1 class="text-xl sm:text-2xl font-bold ff-text-gold"><i class="fas fa-gem mr-1.5 sm:mr-2"></i>利益計算ツール</h1>
+                <p class="text-[11px] sm:text-xs mt-0.5 sm:mt-1 theme-text-muted">マケボ出品手数料や自家調達を考慮した利益シミュレーション</p>
             </div>
-            <button id="btn-settings" class="ff-button px-3 py-2"><i class="fas fa-cog text-xl"></i></button>
+            <button id="btn-settings" class="ff-button px-2.5 py-1.5 sm:px-3 sm:py-2"><i class="fas fa-cog text-lg sm:text-xl"></i></button>
         </div>
     </header>
 
     <!-- 設定モーダル -->
-    <div id="modal-settings" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center">
-        <div class="ff-window p-6 w-11/12 max-w-sm">
-            <div class="ff-header p-3 -mt-6 -mx-6 mb-4">
-                <h3 class="text-lg font-bold"><i class="fas fa-cog mr-2"></i>計算設定</h3>
+    <div id="modal-settings" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-3">
+        <div class="ff-window p-5 sm:p-6 w-full max-w-sm">
+            <div class="ff-header p-3 -mt-5 -mx-5 sm:-mt-6 sm:-mx-6 mb-4">
+                <h3 class="text-base sm:text-lg font-bold"><i class="fas fa-cog mr-2"></i>計算設定</h3>
             </div>
-            <div class="mb-4">
-                <label class="block text-sm theme-text-muted mb-1">外観テーマ</label>
-                <select id="setting-theme" class="w-full p-2 ff-input cursor-pointer">
+            <div class="mb-3 sm:mb-4">
+                <label class="block text-xs sm:text-sm theme-text-muted mb-1">外観テーマ</label>
+                <select id="setting-theme" class="w-full p-2 ff-input text-xs sm:text-sm cursor-pointer">
                     <option value="modern">FFモダン (デフォルト)</option>
                     <option value="classic">FFクラシック</option>
                     <option value="light">ライトモード</option>
                 </select>
             </div>
-            <div class="mb-4">
-                <label class="block text-sm theme-text-muted mb-1">販売手数料 (%)</label>
-                <input type="number" id="setting-tax-rate" value="5" min="0" step="any" class="w-full p-2 ff-input">
-                <p class="text-xs theme-text-muted mt-1 opacity-80">マケボ出品時に引かれる手数料率</p>
+            <div class="mb-3 sm:mb-4">
+                <label class="block text-xs sm:text-sm theme-text-muted mb-1">販売手数料 (%)</label>
+                <input type="number" id="setting-tax-rate" value="5" min="0" step="any" class="w-full p-2 ff-input text-xs sm:text-sm">
+                <p class="text-[10px] sm:text-xs theme-text-muted mt-1 opacity-80">マケボ出品時に引かれる手数料率</p>
             </div>
-            <div class="mb-4">
-                <label class="block text-sm theme-text-muted mb-1">1セットの個数 (例: 99)</label>
-                <input type="number" id="setting-lot-size" value="99" min="0" step="any" class="w-full p-2 ff-input">
+            <div class="mb-3 sm:mb-4">
+                <label class="block text-xs sm:text-sm theme-text-muted mb-1">1セットの個数 (例: 99)</label>
+                <input type="number" id="setting-lot-size" value="99" min="0" step="any" class="w-full p-2 ff-input text-xs sm:text-sm">
             </div>
-            <div class="mb-4">
-                <label class="block text-sm theme-text-muted mb-1">セット数 (例: 20)</label>
-                <input type="number" id="setting-lot-count" value="20" min="0" step="any" class="w-full p-2 ff-input">
+            <div class="mb-3 sm:mb-4">
+                <label class="block text-xs sm:text-sm theme-text-muted mb-1">セット数 (例: 20)</label>
+                <input type="number" id="setting-lot-count" value="20" min="0" step="any" class="w-full p-2 ff-input text-xs sm:text-sm">
             </div>
-            <div class="flex justify-end gap-2 mt-6 pt-4 border-t theme-border-light">
-                <button id="btn-close-settings" class="ff-button px-4 py-2 text-sm">キャンセル</button>
-                <button id="btn-save-settings" class="ff-button ff-button-primary px-4 py-2 text-sm">保存</button>
+            <div class="flex justify-end gap-2 mt-4 sm:mt-6 pt-3 sm:pt-4 border-t theme-border-light">
+                <button id="btn-close-settings" class="ff-button px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm">キャンセル</button>
+                <button id="btn-save-settings" class="ff-button ff-button-primary px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm">保存</button>
             </div>
         </div>
     </div>
 
     <!-- 確認モーダル -->
-    <div id="modal-confirm" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[100] flex items-center justify-center">
-        <div class="ff-window p-6 w-11/12 max-w-sm">
-            <div class="ff-header p-3 -mt-6 -mx-6 mb-4">
-                <h3 class="text-lg font-bold"><i class="fas fa-exclamation-circle mr-2"></i>確認</h3>
+    <div id="modal-confirm" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[100] flex items-center justify-center p-3">
+        <div class="ff-window p-5 sm:p-6 w-full max-w-sm">
+            <div class="ff-header p-3 -mt-5 -mx-5 sm:-mt-6 sm:-mx-6 mb-4">
+                <h3 class="text-base sm:text-lg font-bold"><i class="fas fa-exclamation-circle mr-2"></i>確認</h3>
             </div>
-            <div id="modal-confirm-message" class="mb-6 text-sm leading-relaxed"></div>
-            <div class="flex justify-end gap-2 pt-4 border-t theme-border-light">
-                <button id="btn-confirm-no" class="ff-button px-4 py-2 text-sm w-20">いいえ</button>
-                <button id="btn-confirm-yes" class="ff-button ff-button-primary px-4 py-2 text-sm w-20">はい</button>
+            <div id="modal-confirm-message" class="mb-5 sm:mb-6 text-xs sm:text-sm leading-relaxed"></div>
+            <div class="flex justify-end gap-2 pt-3 sm:pt-4 border-t theme-border-light">
+                <button id="btn-confirm-no" class="ff-button px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm w-16 sm:w-20">いいえ</button>
+                <button id="btn-confirm-yes" class="ff-button ff-button-primary px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm w-16 sm:w-20">はい</button>
             </div>
         </div>
     </div>
 
-    <div class="flex border-b var(--win-border) mb-6 overflow-x-auto hide-scrollbar pl-2" style="border-color: var(--win-border);">
-        <button id="tab-calc" class="ff-tab ff-tab-active px-6 py-2.5 font-medium text-sm whitespace-nowrap transition-colors" onclick="switchTab('calc')">
-            <i class="fas fa-edit mr-2"></i>計算シート
+    <div class="flex border-b var(--win-border) mb-4 sm:mb-6 overflow-x-auto hide-scrollbar pl-1 sm:pl-2" style="border-color: var(--win-border);">
+        <button id="tab-calc" class="ff-tab ff-tab-active px-4 sm:px-6 py-2 sm:py-2.5 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors" onclick="switchTab('calc')">
+            <i class="fas fa-edit mr-1.5 sm:mr-2"></i>計算シート
         </button>
-        <button id="tab-history" class="ff-tab ff-tab-inactive px-6 py-2.5 font-medium text-sm whitespace-nowrap transition-colors" onclick="switchTab('history')">
-            <i class="fas fa-book mr-2"></i>保存履歴
+        <button id="tab-history" class="ff-tab ff-tab-inactive px-4 sm:px-6 py-2 sm:py-2.5 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors" onclick="switchTab('history')">
+            <i class="fas fa-book mr-1.5 sm:mr-2"></i>保存履歴
         </button>
-        <button id="tab-compare" class="ff-tab ff-tab-inactive px-6 py-2.5 font-medium text-sm whitespace-nowrap transition-colors" onclick="switchTab('compare')">
-            <i class="fas fa-balance-scale mr-2"></i>データ比較
+        <button id="tab-compare" class="ff-tab ff-tab-inactive px-4 sm:px-6 py-2 sm:py-2.5 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors" onclick="switchTab('compare')">
+            <i class="fas fa-balance-scale mr-1.5 sm:mr-2"></i>データ比較
         </button>
     </div>
 
     <!-- 計算シートビュー -->
-    <div id="view-calc" class="space-y-6">
+    <div id="view-calc" class="space-y-4 sm:space-y-6">
         <!-- 基本情報 -->
-        <div class="ff-window p-6 relative">
+        <div class="ff-window p-4 sm:p-6 relative">
             <div class="flex justify-between items-center mb-4 border-b pb-2 theme-border-light">
                 <h2 class="text-lg font-semibold ff-text-gold"><i class="fas fa-info-circle mr-2"></i>基本情報</h2>
                 <button onclick="createNew()" class="ff-button ff-button-danger px-3 py-1.5 text-sm flex items-center">
@@ -646,20 +646,25 @@
         state.materials.forEach(m => {
             const isFree = m.isFree ? 'checked' : ''; const dis = m.isFree ? 'disabled' : '';
             container.insertAdjacentHTML('beforeend', `
-                <div id="material-row-${m.id}" class="flex flex-wrap md:flex-nowrap items-center gap-2 theme-panel p-2 rounded">
-                    <div class="flex-grow min-w-[150px]">
-                        <input type="text" placeholder="材料名" value="${m.name}" oninput="updateMaterial('${m.id}', 'name', this.value)" class="w-full p-2 ff-input text-sm">
+                <div id="material-row-${m.id}" class="flex flex-col sm:flex-row sm:items-center gap-2 theme-panel p-2.5 sm:p-2 rounded">
+                    <div class="flex items-center gap-2 w-full sm:flex-grow">
+                        <input type="text" placeholder="材料名" value="${m.name}" oninput="updateMaterial('${m.id}', 'name', this.value)" class="flex-grow p-1.5 sm:p-2 ff-input text-xs sm:text-sm">
+                        <button onclick="removeMaterial('${m.id}')" class="sm:hidden theme-text-muted hover:text-red-500 p-1.5 rounded transition-colors" title="削除"><i class="fas fa-times"></i></button>
                     </div>
-                    <div class="flex items-center gap-1"><span class="theme-text-muted">¥</span>
-                        <input type="number" min="0" step="any" placeholder="単価" value="${m.unitPrice}" oninput="if(this.value<0)this.value=0; updateMaterial('${m.id}', 'unitPrice', parseFloat(this.value)||0)" ${dis} class="w-24 p-2 ff-input text-sm material-price-input">
-                    </div><div class="theme-text-muted">×</div>
-                    <div class="flex items-center gap-1">
-                        <input type="number" min="0" step="any" placeholder="数量" value="${m.amount}" oninput="if(this.value<0)this.value=0; updateMaterial('${m.id}', 'amount', parseFloat(this.value)||0)" class="w-20 p-2 ff-input text-sm">
+                    <div class="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
+                        <div class="flex items-center gap-1">
+                            <span class="theme-text-muted text-xs">¥</span>
+                            <input type="number" min="0" step="any" placeholder="単価" value="${m.unitPrice}" oninput="if(this.value<0)this.value=0; updateMaterial('${m.id}', 'unitPrice', parseFloat(this.value)||0)" ${dis} class="w-20 sm:w-24 p-1.5 sm:p-2 ff-input text-xs sm:text-sm material-price-input">
+                        </div>
+                        <div class="theme-text-muted text-xs">×</div>
+                        <div class="flex items-center gap-1">
+                            <input type="number" min="0" step="any" placeholder="数量" value="${m.amount}" oninput="if(this.value<0)this.value=0; updateMaterial('${m.id}', 'amount', parseFloat(this.value)||0)" class="w-16 sm:w-20 p-1.5 sm:p-2 ff-input text-xs sm:text-sm">
+                        </div>
+                        <label class="flex items-center gap-1 text-[11px] sm:text-xs cursor-pointer px-1.5 py-1 rounded transition-colors hover:bg-black hover:bg-opacity-20 whitespace-nowrap">
+                            <input type="checkbox" ${isFree} onchange="updateMaterial('${m.id}', 'isFree', this.checked)" class="ff-checkbox">自家調達
+                        </label>
+                        <button onclick="removeMaterial('${m.id}')" class="hidden sm:block ml-auto theme-text-muted hover:text-red-500 p-2 rounded transition-colors" title="削除"><i class="fas fa-times"></i></button>
                     </div>
-                    <label class="flex items-center gap-1 ml-2 text-xs cursor-pointer px-2 py-1.5 rounded transition-colors hover:bg-black hover:bg-opacity-20">
-                        <input type="checkbox" ${isFree} onchange="updateMaterial('${m.id}', 'isFree', this.checked)" class="ff-checkbox">自家調達(¥0)
-                    </label>
-                    <button onclick="removeMaterial('${m.id}')" class="ml-auto theme-text-muted hover:text-red-500 p-2 rounded transition-colors" title="削除"><i class="fas fa-times"></i></button>
                 </div>
             `);
         });
@@ -691,21 +696,26 @@
             const attrOpts = ATTRIBUTES.map(a => `<option value="${a}" ${c.attr===a?'selected':''}>${a}</option>`).join('');
             const typeOpts = CATALYST_TYPES.map(t => `<option value="${t}" ${c.type===t?'selected':''}>${t}</option>`).join('');
             container.insertAdjacentHTML('beforeend', `
-                <div id="catalyst-row-${c.id}" class="flex flex-wrap md:flex-nowrap items-center gap-2 theme-panel p-2 rounded">
-                    <div class="flex items-center gap-2 flex-grow min-w-[150px]">
-                        <select onchange="updateCatalyst('${c.id}', 'attr', this.value)" class="p-2 ff-input text-sm w-[100px] md:w-1/2 cursor-pointer">${attrOpts}</select>
-                        <select onchange="updateCatalyst('${c.id}', 'type', this.value)" class="p-2 ff-input text-sm w-[110px] md:w-1/2 cursor-pointer">${typeOpts}</select>
+                <div id="catalyst-row-${c.id}" class="flex flex-col sm:flex-row sm:items-center gap-2 theme-panel p-2.5 sm:p-2 rounded">
+                    <div class="flex items-center gap-2 w-full sm:flex-grow">
+                        <select onchange="updateCatalyst('${c.id}', 'attr', this.value)" class="p-1.5 sm:p-2 ff-input text-xs sm:text-sm flex-1 sm:w-auto cursor-pointer">${attrOpts}</select>
+                        <select onchange="updateCatalyst('${c.id}', 'type', this.value)" class="p-1.5 sm:p-2 ff-input text-xs sm:text-sm flex-1 sm:w-auto cursor-pointer">${typeOpts}</select>
+                        <button onclick="removeCatalyst('${c.id}')" class="sm:hidden theme-text-muted hover:text-red-500 p-1.5 rounded transition-colors" title="削除"><i class="fas fa-times"></i></button>
                     </div>
-                    <div class="flex items-center gap-1"><span class="theme-text-muted">¥</span>
-                        <input type="number" min="0" step="any" placeholder="単価" value="${c.unitPrice}" oninput="if(this.value<0)this.value=0; updateCatalyst('${c.id}', 'unitPrice', parseFloat(this.value)||0)" ${dis} class="w-24 p-2 ff-input text-sm catalyst-price-input">
-                    </div><div class="theme-text-muted">×</div>
-                    <div class="flex items-center gap-1">
-                        <input type="number" min="0" step="any" placeholder="数量" value="${c.amount}" oninput="if(this.value<0)this.value=0; updateCatalyst('${c.id}', 'amount', parseFloat(this.value)||0)" class="w-20 p-2 ff-input text-sm">
+                    <div class="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
+                        <div class="flex items-center gap-1">
+                            <span class="theme-text-muted text-xs">¥</span>
+                            <input type="number" min="0" step="any" placeholder="単価" value="${c.unitPrice}" oninput="if(this.value<0)this.value=0; updateCatalyst('${c.id}', 'unitPrice', parseFloat(this.value)||0)" ${dis} class="w-20 sm:w-24 p-1.5 sm:p-2 ff-input text-xs sm:text-sm catalyst-price-input">
+                        </div>
+                        <div class="theme-text-muted text-xs">×</div>
+                        <div class="flex items-center gap-1">
+                            <input type="number" min="0" step="any" placeholder="数量" value="${c.amount}" oninput="if(this.value<0)this.value=0; updateCatalyst('${c.id}', 'amount', parseFloat(this.value)||0)" class="w-16 sm:w-20 p-1.5 sm:p-2 ff-input text-xs sm:text-sm">
+                        </div>
+                        <label class="flex items-center gap-1 text-[11px] sm:text-xs cursor-pointer px-1.5 py-1 rounded transition-colors hover:bg-black hover:bg-opacity-20 whitespace-nowrap">
+                            <input type="checkbox" ${isFree} onchange="updateCatalyst('${c.id}', 'isFree', this.checked)" class="ff-checkbox">自家調達
+                        </label>
+                        <button onclick="removeCatalyst('${c.id}')" class="hidden sm:block ml-auto theme-text-muted hover:text-red-500 p-2 rounded transition-colors" title="削除"><i class="fas fa-times"></i></button>
                     </div>
-                    <label class="flex items-center gap-1 ml-2 text-xs cursor-pointer px-2 py-1.5 rounded transition-colors hover:bg-black hover:bg-opacity-20">
-                        <input type="checkbox" ${isFree} onchange="updateCatalyst('${c.id}', 'isFree', this.checked)" class="ff-checkbox">自家調達(¥0)
-                    </label>
-                    <button onclick="removeCatalyst('${c.id}')" class="ml-auto theme-text-muted hover:text-red-500 p-2 rounded transition-colors" title="削除"><i class="fas fa-times"></i></button>
                 </div>
             `);
         });

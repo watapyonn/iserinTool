@@ -118,47 +118,56 @@
         }
     </style>
 </head>
-<body class="min-h-screen font-sans text-gray-800 p-4 md:p-8 flex flex-col items-center">
+<body class="min-h-screen font-sans text-gray-800 p-3 sm:p-6 md:p-8 flex flex-col items-center">
 
-    <div class="max-w-4xl w-full mx-auto space-y-8">
+    <!-- ポータルへ戻るナビゲーションバー -->
+    <div class="max-w-4xl w-full mx-auto mb-2 flex items-center justify-between">
+        <a href="../index.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white text-tataru-dark font-bold text-xs sm:text-sm shadow-sm border border-tataru-pink/60 hover:shadow transition-all duration-200">
+            <span>◀</span>
+            <span>ポータルメニューに戻る</span>
+        </a>
+        <span class="text-[11px] sm:text-xs text-tataru-dark/70 font-cute font-bold">ISERITOOL HUB / FFXIV</span>
+    </div>
+
+    <div class="max-w-4xl w-full mx-auto space-y-5 sm:space-y-8">
         
         <!-- Header -->
-        <header class="text-center space-y-4 my-6">
-            <h1 class="text-3xl md:text-5xl font-cute font-black title-pop leading-tight">
-                タタルになり切り<br class="md:hidden">変換ツールでっす
+        <header class="text-center space-y-2 sm:space-y-4 my-2 sm:my-6">
+            <h1 class="text-2xl sm:text-4xl md:text-5xl font-cute font-black title-pop leading-tight">
+                タタルになり切り<br class="sm:hidden">変換ツールでっす
             </h1>
-            <p class="text-tataru-dark font-bold bg-white/70 inline-block px-4 py-2 rounded-full shadow-sm border border-tataru-light/50">
+            <p class="text-xs sm:text-sm text-tataru-dark font-bold bg-white/70 inline-block px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-sm border border-tataru-light/50">
                 入力した文章を自動的に「暁の金庫番」風に変換いたしまっす！
             </p>
         </header>
 
         <!-- Main Content Area -->
-        <main class="flex flex-col md:flex-row gap-6 md:gap-8 items-start justify-center mt-8">
+        <main class="flex flex-col md:flex-row gap-5 md:gap-8 items-center md:items-start justify-center mt-4 sm:mt-8">
             
             <!-- Character Portrait Area -->
             <div class="w-full md:w-1/3 flex flex-col items-center shrink-0">
-                <div class="relative w-48 h-48 md:w-56 md:h-56 rounded-full border-8 border-white shadow-lg overflow-hidden bg-tataru-light flex items-center justify-center group cursor-pointer transition-transform hover:scale-105" onclick="document.getElementById('image-upload').click()">
+                <div class="relative w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 rounded-full border-4 sm:border-8 border-white shadow-lg overflow-hidden bg-tataru-light flex items-center justify-center group cursor-pointer transition-transform hover:scale-105" onclick="document.getElementById('image-upload').click()">
                     <!-- Default Character Image (Placeholder) -->
                     <img id="char-image" src="https://placehold.co/400x400/C27A71/FFFFFF?text=Tataru+Taru&font=roboto" alt="タタル・タル" class="w-full h-full object-cover">
                     
                     <!-- Overlay for upload hint -->
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span class="text-white font-bold text-sm bg-tataru-dark px-3 py-1 rounded-full border border-white">画像を変更</span>
+                        <span class="text-white font-bold text-xs sm:text-sm bg-tataru-dark px-2.5 py-1 rounded-full border border-white">画像を変更</span>
                     </div>
                 </div>
                 <input type="file" id="image-upload" class="hidden" accept="image/*" onchange="previewImage(event)">
                 
-                <div class="mt-4 text-center">
-                    <p class="font-cute font-bold text-xl text-tataru-dark">タタル・タル</p>
-                    <p class="text-xs text-gray-500 bg-white px-2 py-1 rounded-full mt-1 border border-tataru-light inline-block shadow-sm">暁の血盟 受付・金庫番</p>
+                <div class="mt-2 sm:mt-4 text-center">
+                    <p class="font-cute font-bold text-lg sm:text-xl text-tataru-dark">タタル・タル</p>
+                    <p class="text-[10px] sm:text-xs text-gray-500 bg-white px-2 py-0.5 sm:py-1 rounded-full mt-0.5 border border-tataru-light inline-block shadow-sm">暁の血盟 受付・金庫番</p>
                 </div>
             </div>
 
             <!-- Translation Box Area -->
-            <div class="w-full md:w-2/3 flex flex-col space-y-4 relative">
+            <div class="w-full md:w-2/3 flex flex-col space-y-3 sm:space-y-4 relative">
                 
                 <!-- Output Box (Styled as a speech bubble) -->
-                <div id="output-container" class="speech-bubble speech-bubble-desktop p-6 shadow-md transition-all duration-200 min-h-[150px] flex flex-col">
+                <div id="output-container" class="speech-bubble speech-bubble-desktop p-4 sm:p-6 shadow-md transition-all duration-200 min-h-[120px] sm:min-h-[150px] flex flex-col">
                     <h2 class="text-sm font-bold text-tataru-pink mb-2 flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />

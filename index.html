@@ -131,87 +131,87 @@
     <div class="fixed inset-0 bg-grid pointer-events-none z-0"></div>
 
     <!-- Main Container -->
-    <div class="relative z-10 flex flex-col min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+    <div class="relative z-10 flex flex-col min-h-screen max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-10">
 
         <!-- Top Navigation / Status Header -->
-        <header class="glass-panel rounded-2xl px-6 py-4 mb-10 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4 border border-slate-800/80">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/30 ring-1 ring-white/20">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <header class="glass-panel rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 mb-6 sm:mb-10 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 border border-slate-800/80">
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/30 ring-1 ring-white/20 shrink-0">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                     </svg>
                 </div>
-                <div>
+                <div class="flex-grow">
                     <div class="flex items-center gap-2">
-                        <h1 class="text-xl font-bold font-outfit tracking-wide text-white">ISERI TOOL HUB</h1>
-                        <span class="px-2 py-0.5 text-[10px] font-semibold font-orbitron tracking-wider bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 rounded-full">v2.0</span>
+                        <h1 class="text-lg sm:text-xl font-bold font-outfit tracking-wide text-white">ISERI TOOL HUB</h1>
+                        <span class="px-1.5 py-0.5 text-[9px] sm:text-[10px] font-semibold font-orbitron tracking-wider bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 rounded-full">v2.0</span>
                     </div>
-                    <p class="text-xs text-slate-400">Integrated Gaming & Creative Utility Portal</p>
+                    <p class="text-[11px] sm:text-xs text-slate-400">Integrated Gaming & Creative Utility Portal</p>
                 </div>
             </div>
 
             <!-- Header System Widgets -->
-            <div class="flex items-center gap-4 text-xs font-mono">
-                <div class="hidden sm:flex items-center gap-2 bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-700/50">
+            <div class="flex items-center justify-between w-full sm:w-auto gap-2 sm:gap-4 text-xs font-mono">
+                <div class="flex items-center gap-1.5 bg-slate-900/60 px-2.5 py-1.5 rounded-lg border border-slate-700/50">
                     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span class="text-slate-300">SYSTEM: ACTIVE</span>
+                    <span class="text-slate-300 text-[11px] sm:text-xs">SYSTEM: ACTIVE</span>
                 </div>
-                <div id="live-clock" class="bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-cyan-300 font-bold">
+                <div id="live-clock" class="bg-slate-900/60 px-2.5 py-1.5 rounded-lg border border-slate-700/50 text-cyan-300 font-bold text-[11px] sm:text-xs">
                     00:00:00
                 </div>
             </div>
         </header>
 
         <!-- Hero Section -->
-        <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/10 to-pink-500/10 border border-white/10 text-xs font-medium text-slate-300 mb-4 backdrop-blur-sm shadow-inner">
+        <div class="text-center max-w-3xl mx-auto mb-6 sm:mb-12 px-2">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500/10 to-pink-500/10 border border-white/10 text-[11px] sm:text-xs font-medium text-slate-300 mb-3 backdrop-blur-sm shadow-inner">
                 <span class="text-yellow-400">✨</span> ツールを選択してワンクリックで起動できます
             </div>
-            <h2 class="text-3xl sm:text-5xl font-black font-outfit tracking-tight mb-4 text-white leading-tight">
+            <h2 class="text-2xl sm:text-4xl md:text-5xl font-black font-outfit tracking-tight mb-2 sm:mb-4 text-white leading-tight">
                 SELECT YOUR <span class="text-gradient-cyan">TOOL APPLICATION</span>
             </h2>
-            <p class="text-sm sm:text-base text-slate-400 leading-relaxed max-w-2xl mx-auto">
+            <p class="text-xs sm:text-sm md:text-base text-slate-400 leading-relaxed max-w-2xl mx-auto">
                 ファンタジー＆RPGワールドのユーティリティツールコレクション。<br class="hidden sm:inline">
                 ボイス再生BOXやなりきり文章変換ツールを快適に切り替えて利用できます。
             </p>
         </div>
 
         <!-- Filter & Search Controls -->
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6 sm:mb-8">
             <!-- Filter Tabs -->
-            <div class="flex flex-wrap items-center gap-2 p-1.5 glass-panel rounded-xl border border-slate-800">
-                <button onclick="filterCategory('all')" id="btn-cat-all" class="filter-btn active px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 bg-cyan-500 text-black shadow-md shadow-cyan-500/30">
+            <div class="flex items-center gap-1.5 p-1.5 glass-panel rounded-xl border border-slate-800 overflow-x-auto hide-scrollbar -mx-1 px-2 sm:mx-0">
+                <button onclick="filterCategory('all')" id="btn-cat-all" class="filter-btn active px-3 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold tracking-wide transition-all duration-200 bg-cyan-500 text-black shadow-md shadow-cyan-500/30 whitespace-nowrap">
                     すべて (3)
                 </button>
-                <button onclick="filterCategory('ff7')" id="btn-cat-ff7" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
+                <button onclick="filterCategory('ff7')" id="btn-cat-ff7" class="filter-btn px-3 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200 whitespace-nowrap">
                     FF7 シリーズ
                 </button>
-                <button onclick="filterCategory('ff14')" id="btn-cat-ff14" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
+                <button onclick="filterCategory('ff14')" id="btn-cat-ff14" class="filter-btn px-3 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200 whitespace-nowrap">
                     FF14 シリーズ
                 </button>
-                <button onclick="filterCategory('audio')" id="btn-cat-audio" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
+                <button onclick="filterCategory('audio')" id="btn-cat-audio" class="filter-btn px-3 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200 whitespace-nowrap">
                     音声ツール
                 </button>
-                <button onclick="filterCategory('text')" id="btn-cat-text" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
+                <button onclick="filterCategory('text')" id="btn-cat-text" class="filter-btn px-3 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200 whitespace-nowrap">
                     テキスト変換
                 </button>
-                <button onclick="filterCategory('craft')" id="btn-cat-craft" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
+                <button onclick="filterCategory('craft')" id="btn-cat-craft" class="filter-btn px-3 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200 whitespace-nowrap">
                     クラフト・金策
                 </button>
             </div>
 
             <!-- Search Input -->
-            <div class="relative w-full sm:w-72">
+            <div class="relative w-full sm:w-64 md:w-72 shrink-0">
                 <input type="text" id="tool-search" placeholder="ツールを検索..." oninput="handleSearch()"
-                    class="w-full pl-10 pr-4 py-2 bg-slate-900/80 border border-slate-700/80 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 transition-all">
-                <svg class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="w-full pl-9 pr-4 py-2 bg-slate-900/80 border border-slate-700/80 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 transition-all">
+                <svg class="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
             </div>
         </div>
 
         <!-- Tool Cards Grid -->
-        <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
+        <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 mb-12 sm:mb-16">
 
             <!-- Card 1: バレット ボイスBOX アルティメット -->
             <div class="tool-card group glass-panel rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover border-slate-700/60 hover:border-cyan-500/60 relative overflow-hidden"
