@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISERI TOOL HUB | ゲーミング＆ユーティリティ ポータル</title>
+    <meta name="description" content="FF7 バレット ボイスBOXやFF14 タタル・タルなりきり変換ツールなどの便利で楽しいツールを集約したポータルメニューです。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Outfit:wght@400;600;700;800;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        outfit: ['"Outfit"', 'sans-serif'],
+                        orbitron: ['"Orbitron"', 'sans-serif'],
+                    },
+                    colors: {
+                        ff7: {
+                            blue: '#0a1a3a',
+                            lightBlue: '#1e40af',
+                            accent: '#38bdf8',
+                            gold: '#fbbf24',
+                        },
+                        ff14: {
+                            pink: '#e69f96',
+                            darkPink: '#c27a71',
+                            lightPink: '#f5d3cf',
+                            gold: '#f6ad55',
+                        }
+                    },
+                    boxShadow: {
+                        'neon-blue': '0 0 25px rgba(56, 189, 248, 0.45)',
+                        'neon-pink': '0 0 25px rgba(230, 159, 150, 0.45)',
+                        'neon-cyan': '0 0 35px rgba(6, 182, 212, 0.4)',
+                        'card-hover': '0 20px 40px -15px rgba(0, 0, 0, 0.7)',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        glow: {
+                            '0%': { opacity: '0.4' },
+                            '100%': { opacity: '0.8' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Glowing Background Grid */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        }
+        
+        .glass-panel {
+            background: rgba(18, 24, 38, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-panel-hover:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .text-gradient-cyan {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #fcd34d 0%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-pink {
+            background: linear-gradient(135deg, #f472b6 0%, #fb7185 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Ambient Orbs */
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-[#080c14] text-slate-100 min-h-screen relative overflow-x-hidden font-sans antialiased selection:bg-cyan-500 selection:text-black">
+
+    <!-- Ambient Glowing Background Elements -->
+    <div class="ambient-orb w-96 h-96 bg-blue-600/20 top-[-50px] left-[-100px] animate-pulse-slow"></div>
+    <div class="ambient-orb w-[30rem] h-[30rem] bg-indigo-600/15 top-[20%] right-[-150px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="ambient-orb w-[28rem] h-[28rem] bg-rose-600/15 bottom-[10%] left-[20%] animate-pulse-slow" style="animation-delay: 1s;"></div>
+    <div class="fixed inset-0 bg-grid pointer-events-none z-0"></div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 flex flex-col min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+
+        <!-- Top Navigation / Status Header -->
+        <header class="glass-panel rounded-2xl px-6 py-4 mb-10 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4 border border-slate-800/80">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/30 ring-1 ring-white/20">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-xl font-bold font-outfit tracking-wide text-white">ISERI TOOL HUB</h1>
+                        <span class="px-2 py-0.5 text-[10px] font-semibold font-orbitron tracking-wider bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 rounded-full">v2.0</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Integrated Gaming & Creative Utility Portal</p>
+                </div>
+            </div>
+
+            <!-- Header System Widgets -->
+            <div class="flex items-center gap-4 text-xs font-mono">
+                <div class="hidden sm:flex items-center gap-2 bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-700/50">
+                    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-slate-300">SYSTEM: ACTIVE</span>
+                </div>
+                <div id="live-clock" class="bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-cyan-300 font-bold">
+                    00:00:00
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/10 to-pink-500/10 border border-white/10 text-xs font-medium text-slate-300 mb-4 backdrop-blur-sm shadow-inner">
+                <span class="text-yellow-400">✨</span> ツールを選択してワンクリックで起動できます
+            </div>
+            <h2 class="text-3xl sm:text-5xl font-black font-outfit tracking-tight mb-4 text-white leading-tight">
+                SELECT YOUR <span class="text-gradient-cyan">TOOL APPLICATION</span>
+            </h2>
+            <p class="text-sm sm:text-base text-slate-400 leading-relaxed max-w-2xl mx-auto">
+                ファンタジー＆RPGワールドのユーティリティツールコレクション。<br class="hidden sm:inline">
+                ボイス再生BOXやなりきり文章変換ツールを快適に切り替えて利用できます。
+            </p>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap items-center gap-2 p-1.5 glass-panel rounded-xl border border-slate-800">
+                <button onclick="filterCategory('all')" id="btn-cat-all" class="filter-btn active px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 bg-cyan-500 text-black shadow-md shadow-cyan-500/30">
+                    すべて (2)
+                </button>
+                <button onclick="filterCategory('ff7')" id="btn-cat-ff7" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
+                    FF7 シリーズ
+                </button>
+                <button onclick="filterCategory('ff14')" id="btn-cat-ff14" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
+                    FF14 シリーズ
+                </button>
+                <button onclick="filterCategory('audio')" id="btn-cat-audio" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
+                    音声ツール
+                </button>
+                <button onclick="filterCategory('text')" id="btn-cat-text" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
+                    テキスト変換
+                </button>
+            </div>
+
+            <!-- Search Input -->
+            <div class="relative w-full sm:w-72">
+                <input type="text" id="tool-search" placeholder="ツールを検索..." oninput="handleSearch()"
+                    class="w-full pl-10 pr-4 py-2 bg-slate-900/80 border border-slate-700/80 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 transition-all">
+                <svg class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Tool Cards Grid -->
+        <div id="tools-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+
+            <!-- Card 1: バレット ボイスBOX アルティメット -->
+            <div class="tool-card group glass-panel rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover border-slate-700/60 hover:border-cyan-500/60 relative overflow-hidden"
+                 data-categories="all ff7 audio" data-title="バレット ボイスBOX アルティメット barret voice box ff7">
+                
+                <!-- Background Accent Glow -->
+                <div class="absolute -right-20 -top-20 w-64 h-64 bg-cyan-600/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-all duration-500 pointer-events-none"></div>
+
+                <div>
+                    <!-- Card Top Meta -->
+                    <div class="flex items-center justify-between gap-3 mb-6">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold font-orbitron bg-cyan-950/80 text-cyan-400 border border-cyan-500/30">FF VII</span>
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-800/80 text-slate-300 border border-slate-700">100 VOICES</span>
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-800/80 text-amber-300 border border-slate-700">音声合成</span>
+                        </div>
+                        <span class="text-xs font-mono text-cyan-400/80 bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-800/40">READY</span>
+                    </div>
+
+                    <!-- Visual Header & Icon -->
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-black border-2 border-cyan-500/40 shrink-0 shadow-lg group-hover:border-cyan-400 group-hover:shadow-neon-blue transition-all duration-300">
+                            <img src="Barretvoicebox/sprite/bullt01.jpg" alt="Barret Wallace" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src=''; this.alt='Barret'; this.parentElement.classList.add('flex','items-center','justify-center','bg-slate-900'); this.parentElement.innerHTML='<span class=\'text-2xl\'>🔫</span>';">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                            <span class="absolute bottom-1 right-1 text-[9px] font-orbitron font-bold text-yellow-400 px-1 bg-black/60 rounded">LV.99</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl sm:text-2xl font-bold font-outfit text-white group-hover:text-cyan-300 transition-colors">
+                                バレット ボイスBOX<br><span class="text-sm font-normal text-cyan-400 font-mono tracking-wider">Ultimate Edition</span>
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">
+                                FF7の頼れるリーダー「バレット・ウォーレス」の名言・熱いシャウトなど全100種類のボイスを搭載したファン必携のサウンドツール。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Feature Highlights -->
+                    <div class="grid grid-cols-2 gap-2.5 mb-6 py-3 border-y border-slate-800/80 text-xs">
+                        <div class="flex items-center gap-2 text-slate-300">
+                            <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>クラシックFF7ウィンドウUI</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-300">
+                            <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>アイコン3形態切り替え</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-300">
+                            <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>ブラウザ音声合成再生</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-300">
+                            <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>ページネーション対応</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Launch Button -->
+                <div class="pt-2">
+                    <a href="Barretvoicebox/barret_voice_box_ultimate.html" class="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-cyan-900/30 group-hover:shadow-neon-blue transition-all duration-300">
+                        <span>ツールを起動する</span>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 2: タタル・タルなりきり変換ツール -->
+            <div class="tool-card group glass-panel rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover border-slate-700/60 hover:border-rose-400/60 relative overflow-hidden"
+                 data-categories="all ff14 text" data-title="タタル タル なりきり変換ツール tataru translator ff14 でっす">
+                
+                <!-- Background Accent Glow -->
+                <div class="absolute -right-20 -top-20 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl group-hover:bg-rose-400/20 transition-all duration-500 pointer-events-none"></div>
+
+                <div>
+                    <!-- Card Top Meta -->
+                    <div class="flex items-center justify-between gap-3 mb-6">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold font-orbitron bg-rose-950/80 text-rose-300 border border-rose-500/30">FF XIV</span>
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-800/80 text-slate-300 border border-slate-700">暁の血盟</span>
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-800/80 text-rose-300 border border-slate-700">テキスト変換</span>
+                        </div>
+                        <span class="text-xs font-mono text-rose-300/80 bg-rose-950/50 px-2.5 py-1 rounded-full border border-rose-800/40">READY</span>
+                    </div>
+
+                    <!-- Visual Header & Icon -->
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-gradient-to-br from-rose-200 to-rose-400 border-2 border-rose-300/60 shrink-0 shadow-lg group-hover:border-rose-400 group-hover:shadow-neon-pink transition-all duration-300 flex items-center justify-center">
+                            <span class="text-4xl select-none transform group-hover:scale-110 transition-transform">🌸</span>
+                            <span class="absolute bottom-1 right-1 text-[9px] font-bold text-rose-900 px-1 bg-white/70 rounded">でっす！</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl sm:text-2xl font-bold font-outfit text-white group-hover:text-rose-300 transition-colors">
+                                タタル・タル<br><span class="text-sm font-normal text-rose-300 font-mono tracking-wider">なりきり変換ツールでっす！</span>
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">
+                                入力した日本語をFF14の大人気受付嬢「タタル・タル」特有の愛らしい口調（〜でっす、〜でっしょうか）にリアルタイムで自動変換します！
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Feature Highlights -->
+                    <div class="grid grid-cols-2 gap-2.5 mb-6 py-3 border-y border-slate-800/80 text-xs">
+                        <div class="flex items-center gap-2 text-slate-300">
+                            <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>リアルタイム自動変換</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-300">
+                            <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>ワンクリックコピー機能</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-300">
+                            <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>可愛い吹き出しプレビュー</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-300">
+                            <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>タタル語録プリセット対応</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Launch Button -->
+                <div class="pt-2">
+                    <a href="tatarutool/code_artifact (1).html" class="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-400 hover:to-amber-400 text-white font-bold text-sm tracking-wide shadow-lg shadow-rose-900/30 group-hover:shadow-neon-pink transition-all duration-300">
+                        <span>ツールを起動する</span>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- No Results Fallback -->
+        <div id="no-results" class="hidden text-center py-16 glass-panel rounded-3xl border border-slate-800">
+            <div class="text-4xl mb-3">🔍</div>
+            <p class="text-slate-300 font-bold text-base">該当するツールが見つかりませんでした</p>
+            <p class="text-xs text-slate-500 mt-1">検索条件を変更するか、「すべて」タブを選択してください。</p>
+        </div>
+
+        <!-- System Architecture / Quick Links Info Footer -->
+        <footer class="mt-auto pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-cyan-500"></span>
+                <span>ISERITOOL WEB PORTAL</span>
+                <span class="text-slate-700">|</span>
+                <span>FFVII & FFXIV Community Tools</span>
+            </div>
+            <div>
+                © 2026 ISERITOOL HUB. All rights reserved.
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Live Clock
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('live-clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Category Filtering
+        let currentCategory = 'all';
+        function filterCategory(cat) {
+            currentCategory = cat;
+            
+            // Update button styles
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-cyan-500', 'text-black', 'shadow-md', 'shadow-cyan-500/30');
+                btn.classList.add('text-slate-300');
+            });
+            const activeBtn = document.getElementById(`btn-cat-${cat}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-300');
+                activeBtn.classList.add('bg-cyan-500', 'text-black', 'shadow-md', 'shadow-cyan-500/30');
+            }
+
+            applyFilters();
+        }
+
+        // Search Filter
+        function handleSearch() {
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const searchQuery = document.getElementById('tool-search').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.tool-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const categories = card.getAttribute('data-categories').split(' ');
+                const titleText = card.getAttribute('data-title').toLowerCase();
+                
+                const matchCategory = (currentCategory === 'all') || categories.includes(currentCategory);
+                const matchSearch = !searchQuery || titleText.includes(searchQuery);
+
+                if (matchCategory && matchSearch) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const noResults = document.getElementById('no-results');
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
