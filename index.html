@@ -181,7 +181,7 @@
             <!-- Filter Tabs -->
             <div class="flex flex-wrap items-center gap-2 p-1.5 glass-panel rounded-xl border border-slate-800">
                 <button onclick="filterCategory('all')" id="btn-cat-all" class="filter-btn active px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 bg-cyan-500 text-black shadow-md shadow-cyan-500/30">
-                    すべて (2)
+                    すべて (3)
                 </button>
                 <button onclick="filterCategory('ff7')" id="btn-cat-ff7" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
                     FF7 シリーズ
@@ -194,6 +194,9 @@
                 </button>
                 <button onclick="filterCategory('text')" id="btn-cat-text" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
                     テキスト変換
+                </button>
+                <button onclick="filterCategory('craft')" id="btn-cat-craft" class="filter-btn px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200">
+                    クラフト・金策
                 </button>
             </div>
 
@@ -208,10 +211,10 @@
         </div>
 
         <!-- Tool Cards Grid -->
-        <div id="tools-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
 
             <!-- Card 1: バレット ボイスBOX アルティメット -->
-            <div class="tool-card group glass-panel rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover border-slate-700/60 hover:border-cyan-500/60 relative overflow-hidden"
+            <div class="tool-card group glass-panel rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover border-slate-700/60 hover:border-cyan-500/60 relative overflow-hidden"
                  data-categories="all ff7 audio" data-title="バレット ボイスBOX アルティメット barret voice box ff7">
                 
                 <!-- Background Accent Glow -->
@@ -219,56 +222,56 @@
 
                 <div>
                     <!-- Card Top Meta -->
-                    <div class="flex items-center justify-between gap-3 mb-6">
+                    <div class="flex items-center justify-between gap-2 mb-5">
                         <div class="flex flex-wrap gap-1.5">
-                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold font-orbitron bg-cyan-950/80 text-cyan-400 border border-cyan-500/30">FF VII</span>
-                            <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-800/80 text-slate-300 border border-slate-700">100 VOICES</span>
-                            <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-800/80 text-amber-300 border border-slate-700">音声合成</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold font-orbitron bg-cyan-950/80 text-cyan-400 border border-cyan-500/30">FF VII</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-800/80 text-slate-300 border border-slate-700">100 VOICES</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-800/80 text-amber-300 border border-slate-700">音声合成</span>
                         </div>
-                        <span class="text-xs font-mono text-cyan-400/80 bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-800/40">READY</span>
+                        <span class="text-[10px] font-mono text-cyan-400/80 bg-cyan-950/50 px-2 py-0.5 rounded-full border border-cyan-800/40">READY</span>
                     </div>
 
                     <!-- Visual Header & Icon -->
-                    <div class="flex items-start gap-4 mb-6">
-                        <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-black border-2 border-cyan-500/40 shrink-0 shadow-lg group-hover:border-cyan-400 group-hover:shadow-neon-blue transition-all duration-300">
+                    <div class="flex items-start gap-3.5 mb-5">
+                        <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-black border-2 border-cyan-500/40 shrink-0 shadow-lg group-hover:border-cyan-400 group-hover:shadow-neon-blue transition-all duration-300">
                             <img src="Barretvoicebox/sprite/bullt01.jpg" alt="Barret Wallace" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src=''; this.alt='Barret'; this.parentElement.classList.add('flex','items-center','justify-center','bg-slate-900'); this.parentElement.innerHTML='<span class=\'text-2xl\'>🔫</span>';">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                            <span class="absolute bottom-1 right-1 text-[9px] font-orbitron font-bold text-yellow-400 px-1 bg-black/60 rounded">LV.99</span>
+                            <span class="absolute bottom-1 right-1 text-[8px] font-orbitron font-bold text-yellow-400 px-1 bg-black/60 rounded">LV.99</span>
                         </div>
                         <div>
-                            <h3 class="text-xl sm:text-2xl font-bold font-outfit text-white group-hover:text-cyan-300 transition-colors">
-                                バレット ボイスBOX<br><span class="text-sm font-normal text-cyan-400 font-mono tracking-wider">Ultimate Edition</span>
+                            <h3 class="text-lg sm:text-xl font-bold font-outfit text-white group-hover:text-cyan-300 transition-colors">
+                                バレット ボイスBOX<br><span class="text-xs font-normal text-cyan-400 font-mono tracking-wider">Ultimate Edition</span>
                             </h3>
                             <p class="text-xs text-slate-400 mt-1 line-clamp-2">
-                                FF7の頼れるリーダー「バレット・ウォーレス」の名言・熱いシャウトなど全100種類のボイスを搭載したファン必携のサウンドツール。
+                                FF7の頼れるリーダー「バレット」の熱い名言など全100種類のボイスを搭載したサウンドBOX。
                             </p>
                         </div>
                     </div>
 
                     <!-- Feature Highlights -->
-                    <div class="grid grid-cols-2 gap-2.5 mb-6 py-3 border-y border-slate-800/80 text-xs">
-                        <div class="flex items-center gap-2 text-slate-300">
-                            <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>クラシックFF7ウィンドウUI</span>
+                    <div class="grid grid-cols-2 gap-2 mb-5 py-3 border-y border-slate-800/80 text-xs">
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">FF7ウィンドウUI</span>
                         </div>
-                        <div class="flex items-center gap-2 text-slate-300">
-                            <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>アイコン3形態切り替え</span>
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">アイコン3種切替</span>
                         </div>
-                        <div class="flex items-center gap-2 text-slate-300">
-                            <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>ブラウザ音声合成再生</span>
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">ブラウザ合成音声</span>
                         </div>
-                        <div class="flex items-center gap-2 text-slate-300">
-                            <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>ページネーション対応</span>
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">ページネーション</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Launch Button -->
                 <div class="pt-2">
-                    <a href="Barretvoicebox/barret_voice_box_ultimate.html" class="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-cyan-900/30 group-hover:shadow-neon-blue transition-all duration-300">
+                    <a href="Barretvoicebox/barret_voice_box_ultimate.html" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-cyan-900/30 group-hover:shadow-neon-blue transition-all duration-300">
                         <span>ツールを起動する</span>
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -278,7 +281,7 @@
             </div>
 
             <!-- Card 2: タタル・タルなりきり変換ツール -->
-            <div class="tool-card group glass-panel rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover border-slate-700/60 hover:border-rose-400/60 relative overflow-hidden"
+            <div class="tool-card group glass-panel rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover border-slate-700/60 hover:border-rose-400/60 relative overflow-hidden"
                  data-categories="all ff14 text" data-title="タタル タル なりきり変換ツール tataru translator ff14 でっす">
                 
                 <!-- Background Accent Glow -->
@@ -286,55 +289,121 @@
 
                 <div>
                     <!-- Card Top Meta -->
-                    <div class="flex items-center justify-between gap-3 mb-6">
+                    <div class="flex items-center justify-between gap-2 mb-5">
                         <div class="flex flex-wrap gap-1.5">
-                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold font-orbitron bg-rose-950/80 text-rose-300 border border-rose-500/30">FF XIV</span>
-                            <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-800/80 text-slate-300 border border-slate-700">暁の血盟</span>
-                            <span class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-800/80 text-rose-300 border border-slate-700">テキスト変換</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold font-orbitron bg-rose-950/80 text-rose-300 border border-rose-500/30">FF XIV</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-800/80 text-slate-300 border border-slate-700">暁の血盟</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-800/80 text-rose-300 border border-slate-700">テキスト変換</span>
                         </div>
-                        <span class="text-xs font-mono text-rose-300/80 bg-rose-950/50 px-2.5 py-1 rounded-full border border-rose-800/40">READY</span>
+                        <span class="text-[10px] font-mono text-rose-300/80 bg-rose-950/50 px-2 py-0.5 rounded-full border border-rose-800/40">READY</span>
                     </div>
 
                     <!-- Visual Header & Icon -->
-                    <div class="flex items-start gap-4 mb-6">
-                        <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-gradient-to-br from-rose-200 to-rose-400 border-2 border-rose-300/60 shrink-0 shadow-lg group-hover:border-rose-400 group-hover:shadow-neon-pink transition-all duration-300 flex items-center justify-center">
-                            <span class="text-4xl select-none transform group-hover:scale-110 transition-transform">🌸</span>
-                            <span class="absolute bottom-1 right-1 text-[9px] font-bold text-rose-900 px-1 bg-white/70 rounded">でっす！</span>
+                    <div class="flex items-start gap-3.5 mb-5">
+                        <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gradient-to-br from-rose-200 to-rose-400 border-2 border-rose-300/60 shrink-0 shadow-lg group-hover:border-rose-400 group-hover:shadow-neon-pink transition-all duration-300 flex items-center justify-center">
+                            <span class="text-3xl select-none transform group-hover:scale-110 transition-transform">🌸</span>
+                            <span class="absolute bottom-1 right-1 text-[8px] font-bold text-rose-900 px-1 bg-white/70 rounded">でっす！</span>
                         </div>
                         <div>
-                            <h3 class="text-xl sm:text-2xl font-bold font-outfit text-white group-hover:text-rose-300 transition-colors">
-                                タタル・タル<br><span class="text-sm font-normal text-rose-300 font-mono tracking-wider">なりきり変換ツールでっす！</span>
+                            <h3 class="text-lg sm:text-xl font-bold font-outfit text-white group-hover:text-rose-300 transition-colors">
+                                タタル・タル<br><span class="text-xs font-normal text-rose-300 font-mono tracking-wider">なりきり変換ツールでっす！</span>
                             </h3>
                             <p class="text-xs text-slate-400 mt-1 line-clamp-2">
-                                入力した日本語をFF14の大人気受付嬢「タタル・タル」特有の愛らしい口調（〜でっす、〜でっしょうか）にリアルタイムで自動変換します！
+                                入力した日本語をFF14「タタル・タル」の愛らしい口調（〜でっす）にリアルタイム自動変換！
                             </p>
                         </div>
                     </div>
 
                     <!-- Feature Highlights -->
-                    <div class="grid grid-cols-2 gap-2.5 mb-6 py-3 border-y border-slate-800/80 text-xs">
-                        <div class="flex items-center gap-2 text-slate-300">
-                            <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>リアルタイム自動変換</span>
+                    <div class="grid grid-cols-2 gap-2 mb-5 py-3 border-y border-slate-800/80 text-xs">
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">リアルタイム自動変換</span>
                         </div>
-                        <div class="flex items-center gap-2 text-slate-300">
-                            <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>ワンクリックコピー機能</span>
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">ワンクリックコピー</span>
                         </div>
-                        <div class="flex items-center gap-2 text-slate-300">
-                            <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>可愛い吹き出しプレビュー</span>
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">可愛い吹き出し表示</span>
                         </div>
-                        <div class="flex items-center gap-2 text-slate-300">
-                            <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>タタル語録プリセット対応</span>
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">タタル語録プリセット</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Launch Button -->
                 <div class="pt-2">
-                    <a href="tatarutool/code_artifact (1).html" class="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-400 hover:to-amber-400 text-white font-bold text-sm tracking-wide shadow-lg shadow-rose-900/30 group-hover:shadow-neon-pink transition-all duration-300">
+                    <a href="tatarutool/code_artifact (1).html" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-400 hover:to-amber-400 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-rose-900/30 group-hover:shadow-neon-pink transition-all duration-300">
+                        <span>ツールを起動する</span>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 3: クラフト・金策利益計算ツール -->
+            <div class="tool-card group glass-panel rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover border-slate-700/60 hover:border-amber-400/60 relative overflow-hidden"
+                 data-categories="all ff14 craft" data-title="クラフト 金策 利益 計算 ツール ff14 craft market profit means">
+                
+                <!-- Background Accent Glow -->
+                <div class="absolute -right-20 -top-20 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl group-hover:bg-amber-400/20 transition-all duration-500 pointer-events-none"></div>
+
+                <div>
+                    <!-- Card Top Meta -->
+                    <div class="flex items-center justify-between gap-2 mb-5">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold font-orbitron bg-amber-950/80 text-amber-300 border border-amber-500/30">FF XIV</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-800/80 text-slate-300 border border-slate-700">クラフター</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-800/80 text-emerald-400 border border-slate-700">利益シミュレーター</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-amber-300/80 bg-amber-950/50 px-2 py-0.5 rounded-full border border-amber-800/40">READY</span>
+                    </div>
+
+                    <!-- Visual Header & Icon -->
+                    <div class="flex items-start gap-3.5 mb-5">
+                        <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gradient-to-br from-amber-900/60 to-slate-900 border-2 border-amber-400/60 shrink-0 shadow-lg group-hover:border-amber-300 group-hover:shadow-[0_0_25px_rgba(245,158,11,0.45)] transition-all duration-300 flex items-center justify-center">
+                            <span class="text-3xl select-none transform group-hover:scale-110 transition-transform">💎</span>
+                            <span class="absolute bottom-1 right-1 text-[8px] font-bold text-amber-300 px-1 bg-black/70 rounded">GIL+</span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg sm:text-xl font-bold font-outfit text-white group-hover:text-amber-300 transition-colors">
+                                クラフト・金策<br><span class="text-xs font-normal text-amber-300 font-mono tracking-wider">利益計算ツール</span>
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">
+                                マケボ手数料・素材原価・自家調達比率を考慮した本格的なクラフター向け利益シミュレーター。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Feature Highlights -->
+                    <div class="grid grid-cols-2 gap-2 mb-5 py-3 border-y border-slate-800/80 text-xs">
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">原価・手数料自動計算</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">自家調達比率設定</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">複数テーマ切替対応</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="truncate">レシピ保存＆呼出</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Launch Button -->
+                <div class="pt-2">
+                    <a href="FF14means/code_artifact.html" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-600 via-amber-500 to-emerald-600 hover:from-amber-500 hover:to-emerald-500 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-amber-900/30 group-hover:shadow-[0_0_25px_rgba(245,158,11,0.45)] transition-all duration-300">
                         <span>ツールを起動する</span>
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>

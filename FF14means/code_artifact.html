@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="modern">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ゲーム向け クラフト・金策利益計算ツール</title>
+    
+    <!-- ファビコン (ダイヤのSVGアイコン) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22><path fill=%22%23f0deab%22 d=%22M116.7 33.8c4.5-6.1 11.7-9.8 19.3-9.8H376c7.6 0 14.8 3.6 19.3 9.8l112 152c6.8 9.2 6.1 21.9-1.5 30.4l-232 256c-4.5 5-11 7.9-17.8 7.9s-13.2-2.9-17.8-7.9l-232-256c-7.7-8.5-8.3-21.2-1.5-30.4l112-152z%22/></svg>">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+    <style>
+        /* --- テーマ変数定義 --- */
+        :root {
+            /* モダンテーマ (デフォルト) */
+            --font-main: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+            --bg-body: #121212;
+            --bg-pattern: radial-gradient(#222 1px, transparent 1px);
+            --bg-pattern-size: 20px 20px;
+            --text-main: #d4d4d4;
+            --text-muted: #9ca3af;
+            --text-gold: #f0deab;
+            --text-green: #8ce863;
+            --text-red: #ff5c5c;
+
+            --win-bg: linear-gradient(135deg, rgba(30,30,30,0.95) 0%, rgba(15,15,15,0.95) 100%);
+            --win-border: #7c6c53;
+            --win-shadow: inset 0 0 0 1px #3a3223, 0 8px 16px rgba(0,0,0,0.6);
+            --win-radius: 6px;
+            
+            --header-bg: linear-gradient(to bottom, #4a3f2d, #2a2318);
+            --header-border: #7c6c53;
+            --header-text: #f0deab;
+            --header-shadow: 1px 1px 2px rgba(0,0,0,0.9);
+
+            --btn-bg: linear-gradient(to bottom, #606060, #383838);
+            --btn-border: #111;
+            --btn-shadow: inset 0 0 0 1px #808080, 1px 1px 3px rgba(0,0,0,0.5);
+            --btn-hover-bg: linear-gradient(to bottom, #707070, #484848);
+            --btn-text: #e0e0e0;
+
+            --btn-pri-bg: linear-gradient(to bottom, #4a6b4a, #2a4b2a);
+            --btn-pri-shadow: inset 0 0 0 1px #6b8b6b, 1px 1px 3px rgba(0,0,0,0.5);
+            --btn-pri-hover-bg: linear-gradient(to bottom, #5a7b5a, #3a5b3a);
+
+            --btn-dan-bg: linear-gradient(to bottom, #884444, #442222);
+            --btn-dan-shadow: inset 0 0 0 1px #aa6666, 1px 1px 3px rgba(0,0,0,0.5);
+            --btn-dan-hover-bg: linear-gradient(to bottom, #995555, #553333);
+
+            --input-bg: #121212;
+            --input-border: #555;
+            --input-text: #fff;
+            --input-focus: #f0deab;
+            --input-shadow: inset 2px 2px 5px rgba(0,0,0,0.7);
+            --input-disabled: #2a2a2a;
+            --input-disabled-text: #777;
+
+            --tab-active-bg: linear-gradient(to bottom, #4a3f2d, #202020);
+            --tab-inactive-bg: linear-gradient(to bottom, #404040, #222);
+            --tab-hover-bg: linear-gradient(to bottom, #505050, #333);
+            --tab-border-active: #202020;
+            
+            --panel-bg: #1a1a1a;
+            --panel-bg-dark: #111;
+            --panel-border: #333;
+            --panel-border-light: #444;
+            --panel-border-dotted: dashed #555;
+        }
+
+        [data-theme="classic"] {
+            --font-main: 'DotGothic16', sans-serif;
+            --bg-body: #000;
+            --bg-pattern: none;
+            --text-main: #fff;
+            --text-muted: #b0c4de;
+            --text-gold: #fff;
+            --text-green: #55ff55;
+            --text-red: #ff5555;
+
+            --win-bg: #0000aa;
+            --win-border: #fff;
+            --win-shadow: inset 0 0 0 2px #0000aa, inset 0 0 0 4px #fff, 0 4px 8px rgba(0,0,0,0.8);
+            --win-radius: 0px;
+            
+            --header-bg: transparent;
+            --header-border: transparent;
+            --header-text: #fff;
+            --header-shadow: 2px 2px 0px #000;
+
+            --btn-bg: #000055;
+            --btn-border: #fff;
+            --btn-shadow: 2px 2px 0px #000;
+            --btn-hover-bg: #0000dd;
+            --btn-text: #fff;
+
+            --btn-pri-bg: #005500;
+            --btn-pri-shadow: 2px 2px 0px #000;
+            --btn-pri-hover-bg: #00aa00;
+
+            --btn-dan-bg: #aa0000;
+            --btn-dan-shadow: 2px 2px 0px #000;
+            --btn-dan-hover-bg: #ff0000;
+
+            --input-bg: #000055;
+            --input-border: #fff;
+            --input-text: #fff;
+            --input-focus: #ff0;
+            --input-shadow: none;
+            --input-disabled: #333;
+            --input-disabled-text: #888;
+
+            --tab-active-bg: #0000aa;
+            --tab-inactive-bg: #000055;
+            --tab-hover-bg: #0000dd;
+            --tab-border-active: #0000aa;
+            
+            --panel-bg: #000088;
+            --panel-bg-dark: #000055;
+            --panel-border: #fff;
+            --panel-border-light: #fff;
+            --panel-border-dotted: solid #fff;
+        }
+
+        [data-theme="light"] {
+            --font-main: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+            --bg-body: #f3f4f6;
+            --bg-pattern: radial-gradient(#d1d5db 1px, transparent 1px);
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --text-gold: #b45309;
+            --text-green: #15803d;
+            --text-red: #dc2626;
+
+            --win-bg: #ffffff;
+            --win-border: #d1d5db;
+            --win-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --win-radius: 8px;
+            
+            --header-bg: #f9fafb;
+            --header-border: #e5e7eb;
+            --header-text: #111827;
+            --header-shadow: none;
+
+            --btn-bg: #ffffff;
+            --btn-border: #d1d5db;
+            --btn-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --btn-hover-bg: #f3f4f6;
+            --btn-text: #374151;
+
+            --btn-pri-bg: #10b981;
+            --btn-pri-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --btn-pri-hover-bg: #059669;
+
+            --btn-dan-bg: #ef4444;
+            --btn-dan-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --btn-dan-hover-bg: #dc2626;
+
+            --input-bg: #ffffff;
+            --input-border: #d1d5db;
+            --input-text: #1f2937;
+            --input-focus: #3b82f6;
+            --input-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+            --input-disabled: #f3f4f6;
+            --input-disabled-text: #9ca3af;
+
+            --tab-active-bg: #ffffff;
+            --tab-inactive-bg: #f3f4f6;
+            --tab-hover-bg: #e5e7eb;
+            --tab-border-active: #ffffff;
+            
+            --panel-bg: #f9fafb;
+            --panel-bg-dark: #f3f4f6;
+            --panel-border: #e5e7eb;
+            --panel-border-light: #d1d5db;
+            --panel-border-dotted: dashed #d1d5db;
+        }
+
+        body { 
+            font-family: var(--font-main);
+            background-color: var(--bg-body);
+            background-image: var(--bg-pattern);
+            background-size: var(--bg-pattern-size);
+            color: var(--text-main);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        [data-theme="classic"] body {
+            font-size: 1.1em;
+            letter-spacing: 0.5px;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* 共通クラス群 */
+        .ff-window {
+            background: var(--win-bg);
+            border: 1px solid var(--win-border);
+            box-shadow: var(--win-shadow);
+            border-radius: var(--win-radius);
+        }
+        .ff-header {
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--header-border);
+            color: var(--header-text);
+            text-shadow: var(--header-shadow);
+            border-radius: calc(var(--win-radius) - 1px) calc(var(--win-radius) - 1px) 0 0;
+        }
+        
+        .ff-button {
+            background: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            box-shadow: var(--btn-shadow);
+            color: var(--btn-text);
+            border-radius: 4px;
+            transition: all 0.1s;
+            cursor: pointer;
+        }
+        [data-theme="light"] .ff-button { border-radius: 6px; }
+        [data-theme="light"] .ff-button-primary, [data-theme="light"] .ff-button-danger { color: white; border-color: transparent; }
+        [data-theme="classic"] .ff-button { border-radius: 0; }
+
+        .ff-button:active { transform: translateY(1px); }
+        .ff-button:hover { background: var(--btn-hover-bg); }
+        .ff-button-primary { background: var(--btn-pri-bg); box-shadow: var(--btn-pri-shadow); }
+        .ff-button-primary:hover { background: var(--btn-pri-hover-bg); }
+        .ff-button-danger { background: var(--btn-dan-bg); box-shadow: var(--btn-dan-shadow); }
+        .ff-button-danger:hover { background: var(--btn-dan-hover-bg); }
+        
+        .ff-input {
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            color: var(--input-text);
+            box-shadow: var(--input-shadow);
+            border-radius: 3px;
+        }
+        [data-theme="light"] .ff-input { border-radius: 6px; }
+        [data-theme="classic"] .ff-input { border-radius: 0; }
+
+        .ff-input:focus {
+            border-color: var(--input-focus);
+            outline: none;
+            box-shadow: 0 0 5px var(--input-focus), var(--input-shadow);
+        }
+        .ff-input:disabled { background-color: var(--input-disabled); color: var(--input-disabled-text); }
+        
+        .ff-text-gold { color: var(--text-gold); }
+        .ff-text-green { color: var(--text-green); }
+        .ff-text-red { color: var(--text-red); }
+        .theme-text-muted { color: var(--text-muted); }
+        .theme-panel { background-color: var(--panel-bg); border: 1px solid var(--panel-border); }
+        .theme-panel-dark { background-color: var(--panel-bg-dark); border: 1px solid var(--panel-border); }
+        .theme-border { border-color: var(--panel-border); }
+        .theme-border-light { border-color: var(--panel-border-light) !important; }
+        .theme-border-dotted { border-bottom: var(--panel-border-dotted); }
+        .theme-border-dotted-box { border: var(--panel-border-dotted); }
+        
+        .ff-tab {
+            border-radius: var(--win-radius) var(--win-radius) 0 0;
+            margin-right: 4px;
+            position: relative;
+            bottom: -1px;
+            cursor: pointer;
+        }
+        [data-theme="classic"] .ff-tab { border-radius: 0; }
+
+        .ff-tab-active {
+            background: var(--tab-active-bg);
+            color: var(--text-gold);
+            border: 1px solid var(--win-border);
+            border-bottom: 1px solid var(--tab-border-active);
+            z-index: 10;
+        }
+        [data-theme="modern"] .ff-tab-active, [data-theme="classic"] .ff-tab-active { text-shadow: 1px 1px 2px black; }
+        .ff-tab-inactive { background: var(--tab-inactive-bg); color: var(--text-muted); border: 1px solid var(--panel-border-light); border-bottom: 1px solid var(--win-border); }
+        .ff-tab-inactive:hover { background: var(--tab-hover-bg); }
+        .ff-checkbox { accent-color: var(--text-gold); width: 1.2rem; height: 1.2rem; cursor: pointer; }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+
+<!-- ポータルへ戻るナビゲーションバー -->
+<div class="max-w-5xl mx-auto px-4 pt-4 mb-2 flex items-center justify-between">
+    <a href="../index.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded ff-button text-xs sm:text-sm font-bold shadow transition-all duration-200" style="color: var(--text-gold);">
+        <span>◀</span>
+        <span>ポータルメニューに戻る</span>
+    </a>
+    <span class="text-xs font-mono" style="color: var(--text-muted);">ISERITOOL HUB / FFXIV CRAFT</span>
+</div>
+
+<div id="app" class="max-w-5xl mx-auto p-4 md:p-6 lg:p-8">
+    
+    <!-- ヘッダー -->
+    <header class="mb-6 flex justify-between items-center ff-window">
+        <div class="ff-header w-full p-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold ff-text-gold"><i class="fas fa-gem mr-2"></i>利益計算ツール</h1>
+                <p class="text-xs mt-1 theme-text-muted">マケボ出品手数料や自家調達を考慮した利益シミュレーション</p>
+            </div>
+            <button id="btn-settings" class="ff-button px-3 py-2"><i class="fas fa-cog text-xl"></i></button>
+        </div>
+    </header>
+
+    <!-- 設定モーダル -->
+    <div id="modal-settings" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center">
+        <div class="ff-window p-6 w-11/12 max-w-sm">
+            <div class="ff-header p-3 -mt-6 -mx-6 mb-4">
+                <h3 class="text-lg font-bold"><i class="fas fa-cog mr-2"></i>計算設定</h3>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm theme-text-muted mb-1">外観テーマ</label>
+                <select id="setting-theme" class="w-full p-2 ff-input cursor-pointer">
+                    <option value="modern">FFモダン (デフォルト)</option>
+                    <option value="classic">FFクラシック</option>
+                    <option value="light">ライトモード</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm theme-text-muted mb-1">販売手数料 (%)</label>
+                <input type="number" id="setting-tax-rate" value="5" min="0" step="any" class="w-full p-2 ff-input">
+                <p class="text-xs theme-text-muted mt-1 opacity-80">マケボ出品時に引かれる手数料率</p>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm theme-text-muted mb-1">1セットの個数 (例: 99)</label>
+                <input type="number" id="setting-lot-size" value="99" min="0" step="any" class="w-full p-2 ff-input">
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm theme-text-muted mb-1">セット数 (例: 20)</label>
+                <input type="number" id="setting-lot-count" value="20" min="0" step="any" class="w-full p-2 ff-input">
+            </div>
+            <div class="flex justify-end gap-2 mt-6 pt-4 border-t theme-border-light">
+                <button id="btn-close-settings" class="ff-button px-4 py-2 text-sm">キャンセル</button>
+                <button id="btn-save-settings" class="ff-button ff-button-primary px-4 py-2 text-sm">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 確認モーダル -->
+    <div id="modal-confirm" class="hidden fixed inset-0 bg-black bg-opacity-70 z-[100] flex items-center justify-center">
+        <div class="ff-window p-6 w-11/12 max-w-sm">
+            <div class="ff-header p-3 -mt-6 -mx-6 mb-4">
+                <h3 class="text-lg font-bold"><i class="fas fa-exclamation-circle mr-2"></i>確認</h3>
+            </div>
+            <div id="modal-confirm-message" class="mb-6 text-sm leading-relaxed"></div>
+            <div class="flex justify-end gap-2 pt-4 border-t theme-border-light">
+                <button id="btn-confirm-no" class="ff-button px-4 py-2 text-sm w-20">いいえ</button>
+                <button id="btn-confirm-yes" class="ff-button ff-button-primary px-4 py-2 text-sm w-20">はい</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex border-b var(--win-border) mb-6 overflow-x-auto hide-scrollbar pl-2" style="border-color: var(--win-border);">
+        <button id="tab-calc" class="ff-tab ff-tab-active px-6 py-2.5 font-medium text-sm whitespace-nowrap transition-colors" onclick="switchTab('calc')">
+            <i class="fas fa-edit mr-2"></i>計算シート
+        </button>
+        <button id="tab-history" class="ff-tab ff-tab-inactive px-6 py-2.5 font-medium text-sm whitespace-nowrap transition-colors" onclick="switchTab('history')">
+            <i class="fas fa-book mr-2"></i>保存履歴
+        </button>
+        <button id="tab-compare" class="ff-tab ff-tab-inactive px-6 py-2.5 font-medium text-sm whitespace-nowrap transition-colors" onclick="switchTab('compare')">
+            <i class="fas fa-balance-scale mr-2"></i>データ比較
+        </button>
+    </div>
+
+    <!-- 計算シートビュー -->
+    <div id="view-calc" class="space-y-6">
+        <!-- 基本情報 -->
+        <div class="ff-window p-6 relative">
+            <div class="flex justify-between items-center mb-4 border-b pb-2 theme-border-light">
+                <h2 class="text-lg font-semibold ff-text-gold"><i class="fas fa-info-circle mr-2"></i>基本情報</h2>
+                <button onclick="createNew()" class="ff-button ff-button-danger px-3 py-1.5 text-sm flex items-center">
+                    <i class="fas fa-trash-restore mr-1"></i>リセット
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm theme-text-muted mb-1">商品名</label>
+                    <input type="text" id="product-name" placeholder="例: コバルトインゴット" class="w-full p-2 ff-input">
+                </div>
+                <div>
+                    <label class="block text-sm theme-text-muted mb-1">販売価格 (1個あたり)</label>
+                    <div class="relative">
+                        <input type="number" id="selling-price" placeholder="0" step="any" min="0" class="w-full p-2 pl-8 ff-input" oninput="if(this.value < 0) this.value = 0; calculate();">
+                        <span class="absolute left-3 top-2 theme-text-muted">¥</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 材料費セクション -->
+        <div class="ff-window p-6">
+            <div class="flex justify-between items-center mb-4 border-b pb-2 theme-border-light">
+                <h2 class="text-lg font-semibold ff-text-gold"><i class="fas fa-box-open mr-2"></i>材料リスト</h2>
+                <button onclick="addMaterialRow()" class="ff-button px-3 py-1.5 text-sm flex items-center">
+                    <i class="fas fa-plus mr-1"></i>追加
+                </button>
+            </div>
+            <div id="materials-container" class="space-y-2"></div>
+            <div class="mt-4 flex justify-end items-center border-t pt-3 theme-border-light">
+                <span class="text-sm theme-text-muted mr-4">材料費合計(1個):</span>
+                <span class="text-xl font-bold ff-text-gold">¥<span id="total-material-cost">0</span></span>
+            </div>
+        </div>
+
+        <!-- 触媒セクション -->
+        <div class="ff-window p-6">
+            <div class="flex justify-between items-center mb-4 border-b pb-2 theme-border-light">
+                <h2 class="text-lg font-semibold ff-text-gold"><i class="fas fa-gem mr-2"></i>触媒 (クリスタル類)</h2>
+                <button onclick="addCatalystRow()" class="ff-button px-3 py-1.5 text-sm flex items-center">
+                    <i class="fas fa-plus mr-1"></i>追加
+                </button>
+            </div>
+            <div id="catalysts-container" class="space-y-2"></div>
+            <div class="mt-4 flex justify-end items-center border-t pt-3 theme-border-light">
+                <span class="text-sm theme-text-muted mr-4">触媒費合計(1個):</span>
+                <span class="text-xl font-bold ff-text-gold">¥<span id="total-catalyst-cost">0</span></span>
+            </div>
+        </div>
+
+        <!-- 計算結果セクション -->
+        <div class="ff-window p-6 relative">
+            <h2 class="text-lg font-semibold mb-4 border-b pb-2 ff-text-gold theme-border-light"><i class="fas fa-coins mr-2"></i>利益シミュレーション</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse mb-6 min-w-[500px]">
+                    <thead>
+                        <tr class="theme-text-muted text-sm theme-border-dotted">
+                            <th class="py-2 font-normal">項目</th>
+                            <th class="py-2 font-normal text-right">1個</th>
+                            <th class="py-2 font-normal text-right"><span id="display-lot-size">99</span>個 (1セット)</th>
+                            <th class="py-2 font-normal text-right"><span id="display-total-count">1980</span>個 (<span id="display-lot-count">20</span>セット)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm md:text-base font-mono">
+                        <tr class="border-b theme-border">
+                            <td class="py-3">売上</td>
+                            <td class="py-3 text-right">¥<span id="calc-rev-1">0</span></td>
+                            <td class="py-3 text-right">¥<span id="calc-rev-lot">0</span></td>
+                            <td class="py-3 text-right font-bold">¥<span id="calc-rev-total">0</span></td>
+                        </tr>
+                        <tr class="border-b theme-border theme-text-muted">
+                            <td class="py-3">手数料 (<span id="display-tax-rate">5</span>%)</td>
+                            <td class="py-3 text-right">-¥<span id="calc-fee-1">0</span></td>
+                            <td class="py-3 text-right">-¥<span id="calc-fee-lot">0</span></td>
+                            <td class="py-3 text-right">-¥<span id="calc-fee-total">0</span></td>
+                        </tr>
+                        <tr class="border-b theme-border theme-text-muted text-opacity-80">
+                            <td class="py-3">原価</td>
+                            <td class="py-3 text-right">-¥<span id="calc-cost-1">0</span></td>
+                            <td class="py-3 text-right">-¥<span id="calc-cost-lot">0</span></td>
+                            <td class="py-3 text-right">-¥<span id="calc-cost-total">0</span></td>
+                        </tr>
+                        <tr class="text-lg font-bold">
+                            <td class="py-4">想定利益</td>
+                            <td class="py-4 text-right ff-text-green">¥<span id="calc-profit-1">0</span></td>
+                            <td class="py-4 text-right ff-text-green">¥<span id="calc-profit-lot">0</span></td>
+                            <td class="py-4 text-right ff-text-green text-xl">¥<span id="calc-profit-total">0</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 theme-panel-dark p-4 rounded">
+                <div class="text-center md:border-r theme-border">
+                    <div class="text-sm theme-text-muted mb-1">利益率</div>
+                    <div class="text-2xl font-bold font-mono"><span id="summary-profit-margin">0</span>%</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-sm theme-text-muted mb-1">原価率</div>
+                    <div class="text-2xl font-bold font-mono ff-text-gold"><span id="summary-cost-margin">0</span>%</div>
+                </div>
+            </div>
+
+            <div id="profit-advice" class="hidden mt-4 p-3 border rounded text-sm text-center font-bold"></div>
+            
+            <div class="mt-6 flex flex-col items-end gap-3">
+                <div id="overwrite-container" class="hidden flex items-center theme-panel px-4 py-2 rounded">
+                    <input type="checkbox" id="overwrite-check" class="ff-checkbox" checked>
+                    <label for="overwrite-check" class="ml-2 text-sm cursor-pointer font-medium select-none">読み込んだ履歴を上書き保存する</label>
+                </div>
+                <button onclick="saveToHistory()" class="ff-button ff-button-primary py-3 px-8 text-base shadow-lg flex items-center">
+                    <i class="fas fa-save mr-2"></i>この計算を保存する
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 保存履歴ビュー -->
+    <div id="view-history" class="hidden space-y-4">
+        <div class="ff-window p-4 flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold ff-text-gold"><i class="fas fa-list mr-2"></i>保存済みデータ</h2>
+            <button onclick="clearHistory()" class="ff-button ff-button-danger px-3 py-1.5 text-sm">
+                <i class="fas fa-trash-alt mr-1"></i>全履歴削除
+            </button>
+        </div>
+
+        <div id="history-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div id="empty-history-msg" class="col-span-full text-center py-12 theme-text-muted theme-border-dotted-box rounded">
+                <i class="fas fa-inbox text-4xl mb-3 opacity-60"></i>
+                <p>保存された履歴はありません。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- データ比較ビュー -->
+    <div id="view-compare" class="hidden space-y-6">
+        <div class="ff-window p-6 relative">
+            <h2 class="text-lg font-semibold mb-4 border-b pb-2 ff-text-gold theme-border-light"><i class="fas fa-balance-scale mr-2"></i>保存データ比較</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label class="block text-sm theme-text-muted mb-1">比較データ 1</label>
+                    <select id="compare-select-1" onchange="updateCompareView()" class="w-full p-2 ff-input cursor-pointer">
+                        <option value="">-- 選択してください --</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm theme-text-muted mb-1">比較データ 2</label>
+                    <select id="compare-select-2" onchange="updateCompareView()" class="w-full p-2 ff-input cursor-pointer">
+                        <option value="">-- 選択してください --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="compare-result-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- ここに比較結果が描画されます -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // --- 状態管理 ---
+    const state = {
+        settings: { theme: 'modern', taxRate: 5, lotSize: 99, lotCount: 20 },
+        materials: [],
+        catalysts: [],
+        history: [],
+        currentLoadedId: null
+    };
+
+    const ATTRIBUTES = ['ファイア', 'アイス', 'ウィンド', 'アース', 'ライトニング', 'ウォーター'];
+    const CATALYST_TYPES = ['シャード', 'クリスタル', 'クラスター'];
+    const generateId = () => Math.random().toString(36).substr(2, 9);
+    let confirmCallback = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadData();
+        applyTheme(state.settings.theme);
+        
+        if (state.materials.length === 0) addMaterialRow('主素材', 0, 1, false);
+        else renderMaterials();
+        
+        renderCatalysts();
+        updateSettingsUI();
+        calculate();
+
+        document.getElementById('btn-settings').addEventListener('click', openSettings);
+        document.getElementById('btn-close-settings').addEventListener('click', closeSettings);
+        document.getElementById('btn-save-settings').addEventListener('click', saveSettings);
+        document.getElementById('modal-settings').addEventListener('click', (e) => { if (e.target === document.getElementById('modal-settings')) closeSettings(); });
+        document.getElementById('btn-confirm-yes').addEventListener('click', () => { if (confirmCallback) confirmCallback(); closeConfirm(); });
+        document.getElementById('btn-confirm-no').addEventListener('click', closeConfirm);
+    });
+
+    // --- UI・テーマ制御 ---
+    function applyTheme(themeName) { document.documentElement.setAttribute('data-theme', themeName); }
+
+    function switchTab(tabName) {
+        const tabs = ['calc', 'history', 'compare'];
+        tabs.forEach(t => {
+            const btn = document.getElementById(`tab-${t}`);
+            const view = document.getElementById(`view-${t}`);
+            if(t === tabName) {
+                btn.className = 'ff-tab ff-tab-active px-6 py-2.5 font-medium text-sm whitespace-nowrap transition-colors';
+                view.classList.remove('hidden');
+            } else {
+                btn.className = 'ff-tab ff-tab-inactive px-6 py-2.5 font-medium text-sm whitespace-nowrap transition-colors';
+                view.classList.add('hidden');
+            }
+        });
+        if (tabName === 'history') renderHistory();
+        else if (tabName === 'compare') updateCompareOptions();
+    }
+
+    function showConfirm(message, onConfirm) {
+        document.getElementById('modal-confirm-message').innerHTML = message;
+        confirmCallback = onConfirm;
+        document.getElementById('modal-confirm').classList.remove('hidden');
+    }
+    function closeConfirm() { document.getElementById('modal-confirm').classList.add('hidden'); confirmCallback = null; }
+
+    function openSettings() {
+        document.getElementById('setting-theme').value = state.settings.theme;
+        document.getElementById('setting-tax-rate').value = state.settings.taxRate;
+        document.getElementById('setting-lot-size').value = state.settings.lotSize;
+        document.getElementById('setting-lot-count').value = state.settings.lotCount;
+        document.getElementById('modal-settings').classList.remove('hidden');
+    }
+    function closeSettings() { document.getElementById('modal-settings').classList.add('hidden'); }
+
+    function saveSettings() {
+        const theme = document.getElementById('setting-theme').value;
+        const tax = parseFloat(document.getElementById('setting-tax-rate').value);
+        const lotSize = parseFloat(document.getElementById('setting-lot-size').value);
+        const lotCount = parseFloat(document.getElementById('setting-lot-count').value);
+        
+        state.settings.theme = theme; applyTheme(theme);
+        if (!isNaN(tax) && tax >= 0) state.settings.taxRate = tax;
+        if (!isNaN(lotSize) && lotSize > 0) state.settings.lotSize = lotSize;
+        if (!isNaN(lotCount) && lotCount > 0) state.settings.lotCount = lotCount;
+        
+        updateSettingsUI(); saveData(); closeSettings(); calculate();
+    }
+
+    function updateSettingsUI() {
+        document.getElementById('display-tax-rate').innerText = state.settings.taxRate;
+        document.getElementById('display-lot-size').innerText = state.settings.lotSize;
+        document.getElementById('display-lot-count').innerText = state.settings.lotCount;
+        document.getElementById('display-total-count').innerText = state.settings.lotSize * state.settings.lotCount;
+    }
+
+    // --- STREAMING_CHUNK:Materials & Catalysts ---
+    function addMaterialRow(name = '', unitPrice = 0, amount = 1, isFree = false) {
+        state.materials.push({ id: generateId(), name, unitPrice, amount, isFree });
+        renderMaterials(); calculate();
+    }
+    function updateMaterial(id, field, value) {
+        const item = state.materials.find(m => m.id === id);
+        if (item) {
+            item[field] = value;
+            if (field === 'isFree') {
+                const input = document.querySelector(`#material-row-${id} .material-price-input`);
+                input.disabled = value;
+                if (value) { item.unitPrice = 0; input.value = 0; }
+            }
+            calculate();
+        }
+    }
+    function removeMaterial(id) { state.materials = state.materials.filter(m => m.id !== id); renderMaterials(); calculate(); }
+
+    function renderMaterials() {
+        const container = document.getElementById('materials-container');
+        container.innerHTML = '';
+        state.materials.forEach(m => {
+            const isFree = m.isFree ? 'checked' : ''; const dis = m.isFree ? 'disabled' : '';
+            container.insertAdjacentHTML('beforeend', `
+                <div id="material-row-${m.id}" class="flex flex-wrap md:flex-nowrap items-center gap-2 theme-panel p-2 rounded">
+                    <div class="flex-grow min-w-[150px]">
+                        <input type="text" placeholder="材料名" value="${m.name}" oninput="updateMaterial('${m.id}', 'name', this.value)" class="w-full p-2 ff-input text-sm">
+                    </div>
+                    <div class="flex items-center gap-1"><span class="theme-text-muted">¥</span>
+                        <input type="number" min="0" step="any" placeholder="単価" value="${m.unitPrice}" oninput="if(this.value<0)this.value=0; updateMaterial('${m.id}', 'unitPrice', parseFloat(this.value)||0)" ${dis} class="w-24 p-2 ff-input text-sm material-price-input">
+                    </div><div class="theme-text-muted">×</div>
+                    <div class="flex items-center gap-1">
+                        <input type="number" min="0" step="any" placeholder="数量" value="${m.amount}" oninput="if(this.value<0)this.value=0; updateMaterial('${m.id}', 'amount', parseFloat(this.value)||0)" class="w-20 p-2 ff-input text-sm">
+                    </div>
+                    <label class="flex items-center gap-1 ml-2 text-xs cursor-pointer px-2 py-1.5 rounded transition-colors hover:bg-black hover:bg-opacity-20">
+                        <input type="checkbox" ${isFree} onchange="updateMaterial('${m.id}', 'isFree', this.checked)" class="ff-checkbox">自家調達(¥0)
+                    </label>
+                    <button onclick="removeMaterial('${m.id}')" class="ml-auto theme-text-muted hover:text-red-500 p-2 rounded transition-colors" title="削除"><i class="fas fa-times"></i></button>
+                </div>
+            `);
+        });
+    }
+
+    function addCatalystRow(attr = 'ファイア', type = 'クリスタル', unitPrice = 50, amount = 1, isFree = false) {
+        state.catalysts.push({ id: generateId(), attr, type, unitPrice, amount, isFree });
+        renderCatalysts(); calculate();
+    }
+    function updateCatalyst(id, field, value) {
+        const item = state.catalysts.find(c => c.id === id);
+        if (item) {
+            item[field] = value;
+            if (field === 'isFree') {
+                const input = document.querySelector(`#catalyst-row-${id} .catalyst-price-input`);
+                input.disabled = value;
+                if (value) { item.unitPrice = 0; input.value = 0; }
+            }
+            calculate();
+        }
+    }
+    function removeCatalyst(id) { state.catalysts = state.catalysts.filter(c => c.id !== id); renderCatalysts(); calculate(); }
+
+    function renderCatalysts() {
+        const container = document.getElementById('catalysts-container');
+        container.innerHTML = '';
+        state.catalysts.forEach(c => {
+            const isFree = c.isFree ? 'checked' : ''; const dis = c.isFree ? 'disabled' : '';
+            const attrOpts = ATTRIBUTES.map(a => `<option value="${a}" ${c.attr===a?'selected':''}>${a}</option>`).join('');
+            const typeOpts = CATALYST_TYPES.map(t => `<option value="${t}" ${c.type===t?'selected':''}>${t}</option>`).join('');
+            container.insertAdjacentHTML('beforeend', `
+                <div id="catalyst-row-${c.id}" class="flex flex-wrap md:flex-nowrap items-center gap-2 theme-panel p-2 rounded">
+                    <div class="flex items-center gap-2 flex-grow min-w-[150px]">
+                        <select onchange="updateCatalyst('${c.id}', 'attr', this.value)" class="p-2 ff-input text-sm w-[100px] md:w-1/2 cursor-pointer">${attrOpts}</select>
+                        <select onchange="updateCatalyst('${c.id}', 'type', this.value)" class="p-2 ff-input text-sm w-[110px] md:w-1/2 cursor-pointer">${typeOpts}</select>
+                    </div>
+                    <div class="flex items-center gap-1"><span class="theme-text-muted">¥</span>
+                        <input type="number" min="0" step="any" placeholder="単価" value="${c.unitPrice}" oninput="if(this.value<0)this.value=0; updateCatalyst('${c.id}', 'unitPrice', parseFloat(this.value)||0)" ${dis} class="w-24 p-2 ff-input text-sm catalyst-price-input">
+                    </div><div class="theme-text-muted">×</div>
+                    <div class="flex items-center gap-1">
+                        <input type="number" min="0" step="any" placeholder="数量" value="${c.amount}" oninput="if(this.value<0)this.value=0; updateCatalyst('${c.id}', 'amount', parseFloat(this.value)||0)" class="w-20 p-2 ff-input text-sm">
+                    </div>
+                    <label class="flex items-center gap-1 ml-2 text-xs cursor-pointer px-2 py-1.5 rounded transition-colors hover:bg-black hover:bg-opacity-20">
+                        <input type="checkbox" ${isFree} onchange="updateCatalyst('${c.id}', 'isFree', this.checked)" class="ff-checkbox">自家調達(¥0)
+                    </label>
+                    <button onclick="removeCatalyst('${c.id}')" class="ml-auto theme-text-muted hover:text-red-500 p-2 rounded transition-colors" title="削除"><i class="fas fa-times"></i></button>
+                </div>
+            `);
+        });
+    }
+
+    // --- STREAMING_CHUNK:Calculation Logic ---
+    function calculate() {
+        const sellingPriceStr = document.getElementById('selling-price').value;
+        const sellingPrice = Math.max(0, parseFloat(sellingPriceStr) || 0);
+        
+        let matCost = 0, catCost = 0;
+        state.materials.forEach(m => { if (!m.isFree) matCost += (m.unitPrice * m.amount); });
+        state.catalysts.forEach(c => { if (!c.isFree) catCost += (c.unitPrice * c.amount); });
+        const cost1 = Math.floor(matCost + catCost);
+        
+        const lotSize = Math.floor(state.settings.lotSize || 99);
+        const lotCount = Math.floor(state.settings.lotCount || 20);
+        const feeRate = (state.settings.taxRate || 0) / 100;
+
+        const rev1 = Math.floor(sellingPrice);
+        const fee1 = Math.floor(rev1 * feeRate);
+        const profit1 = rev1 - fee1 - cost1;
+
+        const revLot = Math.floor(rev1 * lotSize);
+        const feeLot = Math.floor(revLot * feeRate);
+        const costLot = Math.floor(cost1 * lotSize);
+        const profitLot = revLot - feeLot - costLot;
+
+        const revTotal = Math.floor(revLot * lotCount);
+        const feeTotal = Math.floor(revTotal * feeRate);
+        const costTotal = Math.floor(costLot * lotCount);
+        const profitTotal = revTotal - feeTotal - costTotal;
+
+        let profitMargin = 0, costMargin = 0;
+        if (rev1 > 0) {
+            profitMargin = ((profit1 / rev1) * 100).toFixed(1);
+            costMargin = ((cost1 / rev1) * 100).toFixed(1);
+        }
+
+        const fmt = { maximumFractionDigits: 0 };
+        document.getElementById('total-material-cost').innerText = Math.floor(matCost).toLocaleString('ja-JP', fmt);
+        document.getElementById('total-catalyst-cost').innerText = Math.floor(catCost).toLocaleString('ja-JP', fmt);
+        
+        document.getElementById('calc-rev-1').innerText = rev1.toLocaleString('ja-JP', fmt);
+        document.getElementById('calc-rev-lot').innerText = revLot.toLocaleString('ja-JP', fmt);
+        document.getElementById('calc-rev-total').innerText = revTotal.toLocaleString('ja-JP', fmt);
+
+        document.getElementById('calc-fee-1').innerText = fee1.toLocaleString('ja-JP', fmt);
+        document.getElementById('calc-fee-lot').innerText = feeLot.toLocaleString('ja-JP', fmt);
+        document.getElementById('calc-fee-total').innerText = feeTotal.toLocaleString('ja-JP', fmt);
+
+        document.getElementById('calc-cost-1').innerText = cost1.toLocaleString('ja-JP', fmt);
+        document.getElementById('calc-cost-lot').innerText = costLot.toLocaleString('ja-JP', fmt);
+        document.getElementById('calc-cost-total').innerText = costTotal.toLocaleString('ja-JP', fmt);
+
+        document.getElementById('calc-profit-1').innerText = profit1.toLocaleString('ja-JP', fmt);
+        document.getElementById('calc-profit-lot').innerText = profitLot.toLocaleString('ja-JP', fmt);
+        document.getElementById('calc-profit-total').innerText = profitTotal.toLocaleString('ja-JP', fmt);
+
+        let hasDeficit = false;
+        [{el: document.getElementById('calc-profit-1'), val: profit1}, {el: document.getElementById('calc-profit-lot'), val: profitLot}, {el: document.getElementById('calc-profit-total'), val: profitTotal}].forEach(item => {
+            if (item.val < 0) { item.el.classList.remove('ff-text-green'); item.el.classList.add('ff-text-red'); hasDeficit = true; } 
+            else { item.el.classList.add('ff-text-green'); item.el.classList.remove('ff-text-red'); }
+        });
+
+        const adviceEl = document.getElementById('profit-advice');
+        if (adviceEl) {
+            adviceEl.className = 'mt-4 p-3 border rounded text-sm text-center font-bold transition-all';
+            const pm = parseFloat(profitMargin);
+            if (sellingPrice === 0 && cost1 === 0) adviceEl.classList.add('hidden');
+            else if (hasDeficit || pm < 0) { adviceEl.innerHTML = '<i class="fas fa-skull-crossbones mr-2"></i>大赤字です！素材を買って作るなら、やめておいた方がいいでしょう。'; adviceEl.classList.add('bg-red-900/40', 'border-red-500/50', 'text-red-400'); }
+            else if (pm >= 80) { adviceEl.innerHTML = '<i class="fas fa-crown mr-2"></i>素晴らしい利益率です！ボロ儲けのチャンス、ガンガン作りましょう！'; adviceEl.classList.add('bg-yellow-900/40', 'border-yellow-500/50', 'text-yellow-400'); }
+            else if (pm >= 40) { adviceEl.innerHTML = '<i class="fas fa-thumbs-up mr-2"></i>十分な利益が見込めます。安定した金策として優秀です。'; adviceEl.classList.add('bg-green-900/40', 'border-green-500/50', 'text-green-400'); }
+            else if (pm >= 15) { adviceEl.innerHTML = '<i class="fas fa-info-circle mr-2"></i>利益は出ますが薄利です。大量生産して数で稼ぐ必要があります。'; adviceEl.classList.add('bg-blue-900/40', 'border-blue-500/50', 'text-blue-400'); }
+            else { adviceEl.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>利益がごく僅かです。相場変動で簡単に赤字になるリスクがあります。'; adviceEl.classList.add('bg-gray-800/80', 'border-gray-500', 'text-gray-400'); }
+        }
+
+        document.getElementById('summary-profit-margin').innerText = profitMargin;
+        document.getElementById('summary-cost-margin').innerText = costMargin;
+
+        return {
+            date: new Date().toISOString(),
+            productName: document.getElementById('product-name').value || '名称未設定',
+            sellingPrice, cost1, profit1, profitLot, profitTotal, profitMargin, costMargin,
+            lotSize, lotCount, feeRate, rev1, fee1, revTotal, feeTotal, costTotal,
+            materialsSnapshot: JSON.parse(JSON.stringify(state.materials)),
+            catalystsSnapshot: JSON.parse(JSON.stringify(state.catalysts))
+        };
+    }
+
+    // --- STREAMING_CHUNK:History & Compare Logic ---
+    function saveToHistory() {
+        const currentData = calculate();
+        const owEl = document.getElementById('overwrite-check');
+        if (state.currentLoadedId && owEl && owEl.checked) {
+            const index = state.history.findIndex(h => h.id === state.currentLoadedId);
+            if (index !== -1) { currentData.id = state.currentLoadedId; state.history.splice(index, 1); state.history.unshift(currentData); } 
+            else { currentData.id = Date.now().toString(); state.history.unshift(currentData); state.currentLoadedId = currentData.id; }
+        } else {
+            currentData.id = Date.now().toString(); state.history.unshift(currentData); state.currentLoadedId = currentData.id;
+            document.getElementById('overwrite-container').classList.remove('hidden'); document.getElementById('overwrite-check').checked = true;
+        }
+        saveData();
+        const btn = document.querySelector('button[onclick="saveToHistory()"]');
+        const orig = btn.innerHTML; btn.innerHTML = '<i class="fas fa-check mr-2"></i>保存しました！';
+        setTimeout(() => btn.innerHTML = orig, 2000);
+    }
+
+    function deleteHistory(id) {
+        showConfirm('この履歴を削除しますか？', () => {
+            state.history = state.history.filter(h => h.id !== id);
+            if (state.currentLoadedId === id) { state.currentLoadedId = null; document.getElementById('overwrite-container').classList.add('hidden'); }
+            saveData(); renderHistory();
+        });
+    }
+
+    function clearHistory() {
+        if (state.history.length === 0) return;
+        showConfirm('全ての保存済み履歴を削除しますか？<br>この操作は元に戻せません。', () => {
+            state.history = []; state.currentLoadedId = null; document.getElementById('overwrite-container').classList.add('hidden');
+            saveData(); renderHistory();
+        });
+    }
+
+    function loadHistoryToForm(id) {
+        const h = state.history.find(x => x.id === id); if (!h) return;
+        showConfirm('現在の入力内容を上書きして、<br>この履歴データを計算シートに読み込みますか？', () => {
+            document.getElementById('product-name').value = h.productName === '名称未設定' ? '' : h.productName;
+            document.getElementById('selling-price').value = h.sellingPrice || '';
+            state.materials = JSON.parse(JSON.stringify(h.materialsSnapshot || []));
+            state.catalysts = JSON.parse(JSON.stringify(h.catalystsSnapshot || []));
+            state.currentLoadedId = id;
+            document.getElementById('overwrite-container').classList.remove('hidden'); document.getElementById('overwrite-check').checked = true;
+            renderMaterials(); renderCatalysts(); calculate();
+            switchTab('calc'); window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    function createNew() {
+        showConfirm('計算シートの内容をリセットしますか？<br><span class="text-red-400">※保存していないデータは消去されます</span>', () => {
+            state.currentLoadedId = null; document.getElementById('overwrite-container').classList.add('hidden');
+            document.getElementById('product-name').value = ''; document.getElementById('selling-price').value = '';
+            state.materials = []; state.catalysts = []; addMaterialRow('主素材', 0, 1, false);
+            renderMaterials(); renderCatalysts(); calculate();
+        });
+    }
+
+    function renderHistory() {
+        const container = document.getElementById('history-container');
+        const emptyMsg = document.getElementById('empty-history-msg');
+        Array.from(container.children).forEach(c => { if (c.id !== 'empty-history-msg') container.removeChild(c); });
+
+        if (state.history.length === 0) { emptyMsg.classList.remove('hidden'); return; } 
+        else { emptyMsg.classList.add('hidden'); }
+
+        const fmt = { maximumFractionDigits: 0 };
+
+        state.history.forEach(item => {
+            const d = new Date(item.date).toLocaleString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+            const pClass = item.profit1 < 0 ? 'ff-text-red' : 'ff-text-green';
+            
+            const lotSize = Math.floor(item.lotSize || 99);
+            
+            // NOTE: 古い履歴データとの互換性のため、値が存在しない場合は再計算する
+            const rev1 = Math.floor(item.rev1 !== undefined ? item.rev1 : item.sellingPrice);
+            const feeRate = item.feeRate !== undefined ? item.feeRate : ((state.settings.taxRate || 5) / 100);
+            const fee1 = Math.floor(item.fee1 !== undefined ? item.fee1 : rev1 * feeRate);
+            
+            const revLot = Math.floor(rev1 * lotSize);
+            const feeLot = Math.floor(revLot * feeRate);
+            const costLot = Math.floor((item.cost1 || 0) * lotSize);
+            const profitLot = Math.floor(item.profitLot !== undefined ? item.profitLot : (revLot - feeLot - costLot));
+
+            // ホバー時に表示する詳細テーブルのHTML
+            const tooltipHtml = `
+                <div class="hidden group-hover:block absolute left-0 top-full mt-2 z-50 w-[340px] ff-window p-4 shadow-2xl border theme-border">
+                    <h4 class="text-sm font-bold ff-text-gold mb-3 border-b theme-border-light pb-1"><i class="fas fa-coins mr-1"></i>シミュレーション詳細</h4>
+                    <table class="w-full text-left text-xs mb-3 font-mono">
+                        <thead>
+                            <tr class="theme-text-muted border-b theme-border-dotted">
+                                <th class="py-1 font-normal">項目</th>
+                                <th class="py-1 font-normal text-right">1個</th>
+                                <th class="py-1 font-normal text-right">${lotSize}個 (1セット)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="py-1">売上</td>
+                                <td class="py-1 text-right">¥${(rev1||0).toLocaleString('ja-JP', fmt)}</td>
+                                <td class="py-1 text-right">¥${(revLot||0).toLocaleString('ja-JP', fmt)}</td>
+                            </tr>
+                            <tr class="theme-text-muted">
+                                <td class="py-1">手数料</td>
+                                <td class="py-1 text-right">-¥${(fee1||0).toLocaleString('ja-JP', fmt)}</td>
+                                <td class="py-1 text-right">-¥${(feeLot||0).toLocaleString('ja-JP', fmt)}</td>
+                            </tr>
+                            <tr class="theme-text-muted">
+                                <td class="py-1">原価</td>
+                                <td class="py-1 text-right">-¥${Math.floor(item.cost1||0).toLocaleString('ja-JP', fmt)}</td>
+                                <td class="py-1 text-right">-¥${(costLot||0).toLocaleString('ja-JP', fmt)}</td>
+                            </tr>
+                            <tr class="font-bold border-t theme-border pt-1">
+                                <td class="py-2">利益</td>
+                                <td class="py-2 text-right ${pClass}">¥${Math.floor(item.profit1||0).toLocaleString('ja-JP', fmt)}</td>
+                                <td class="py-2 text-right ${pClass}">¥${(profitLot||0).toLocaleString('ja-JP', fmt)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="flex justify-between text-xs font-mono bg-black bg-opacity-30 p-2 rounded">
+                        <span class="theme-text-muted">利益率: <span class="font-bold text-white">${item.profitMargin}%</span></span>
+                        <span class="theme-text-muted">原価率: <span class="font-bold ff-text-gold">${item.costMargin}%</span></span>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', `
+                <div class="ff-window p-4 relative transition-all hover:brightness-110 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2 border-b theme-border-light pb-2">
+                            <div class="group relative cursor-help inline-block">
+                                <h3 class="font-bold text-lg ff-text-gold truncate max-w-[200px] hover:underline decoration-dashed decoration-1 underline-offset-4">${item.productName}</h3>
+                                ${tooltipHtml}
+                            </div>
+                            <div class="text-xs theme-text-muted opacity-70 whitespace-nowrap">${d}</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2 text-sm mb-4 theme-panel-dark p-3 rounded">
+                            <div><span class="theme-text-muted text-xs block">単価</span><span class="font-bold font-mono">¥${Math.floor(item.sellingPrice||0).toLocaleString('ja-JP', fmt)}</span></div>
+                            <div><span class="theme-text-muted text-xs block">1個原価</span><span class="ff-text-red font-bold font-mono">¥${Math.floor(item.cost1||0).toLocaleString('ja-JP', fmt)}</span></div>
+                            <div class="col-span-2 border-t theme-border pt-2 mt-1">
+                                <span class="theme-text-muted text-xs block">想定利益 (${lotSize}個分)</span>
+                                <span class="font-bold text-lg font-mono ${pClass}">
+                                    ¥${(profitLot||0).toLocaleString('ja-JP', fmt)} 
+                                    <span class="text-sm font-normal theme-text-muted">(${item.profitMargin||0}%)</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2 justify-end mt-auto">
+                        <button onclick="loadHistoryToForm('${item.id}')" class="ff-button ff-button-primary px-3 py-1.5 text-sm flex-1"><i class="fas fa-file-import mr-1"></i>読込・編集</button>
+                        <button onclick="deleteHistory('${item.id}')" class="ff-button ff-button-danger px-3 py-1.5 text-sm"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                </div>
+            `);
+        });
+    }
+
+    // --- 比較シート用の描画ロジック ---
+    function updateCompareOptions() {
+        const s1 = document.getElementById('compare-select-1');
+        const s2 = document.getElementById('compare-select-2');
+        const v1 = s1.value, v2 = s2.value;
+
+        const options = `<option value="">-- 選択してください --</option>` + 
+            state.history.map(h => {
+                const d = new Date(h.date).toLocaleString('ja-JP', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+                return `<option value="${h.id}">${h.productName} (${d})</option>`;
+            }).join('');
+
+        s1.innerHTML = options; s2.innerHTML = options;
+        if(state.history.find(h => h.id === v1)) s1.value = v1;
+        if(state.history.find(h => h.id === v2)) s2.value = v2;
+        updateCompareView();
+    }
+
+    function updateCompareView() {
+        const ids = [document.getElementById('compare-select-1').value, document.getElementById('compare-select-2').value];
+        const container = document.getElementById('compare-result-container');
+        container.innerHTML = '';
+        const fmt = { maximumFractionDigits: 0 };
+
+        ids.forEach(id => {
+            const item = state.history.find(h => h.id === id);
+            if (!item) {
+                container.insertAdjacentHTML('beforeend', `<div class="theme-panel-dark p-6 rounded flex items-center justify-center theme-text-muted border theme-border-dotted-box text-sm min-h-[300px]">データを選択してください</div>`);
+                return;
+            }
+
+            const pClass = item.profit1 < 0 ? 'ff-text-red' : 'ff-text-green';
+            const lotSize = Math.floor(item.lotSize || 99);
+            
+            const rev1 = Math.floor(item.rev1 !== undefined ? item.rev1 : item.sellingPrice);
+            const feeRate = item.feeRate !== undefined ? item.feeRate : ((state.settings.taxRate || 5) / 100);
+            const fee1 = Math.floor(item.fee1 !== undefined ? item.fee1 : rev1 * feeRate);
+            
+            const revLot = Math.floor(rev1 * lotSize);
+            const feeLot = Math.floor(revLot * feeRate);
+            const costLot = Math.floor((item.cost1 || 0) * lotSize);
+            const profitLot = Math.floor(item.profitLot !== undefined ? item.profitLot : (revLot - feeLot - costLot));
+
+            container.insertAdjacentHTML('beforeend', `
+                <div class="ff-window p-4 flex flex-col">
+                    <h3 class="font-bold text-lg ff-text-gold mb-3 border-b theme-border-light pb-2 text-center truncate">${item.productName}</h3>
+                    
+                    <table class="w-full text-left text-sm mb-4">
+                        <thead>
+                            <tr class="theme-text-muted border-b theme-border-dotted">
+                                <th class="py-2 font-normal">項目</th>
+                                <th class="py-2 font-normal text-right">1個</th>
+                                <th class="py-2 font-normal text-right">${lotSize}個 (1セット)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="font-mono">
+                            <tr class="border-b theme-border">
+                                <td class="py-2">売上</td>
+                                <td class="py-2 text-right">¥${(rev1||0).toLocaleString('ja-JP', fmt)}</td>
+                                <td class="py-2 text-right">¥${(revLot||0).toLocaleString('ja-JP', fmt)}</td>
+                            </tr>
+                            <tr class="border-b theme-border theme-text-muted">
+                                <td class="py-2">手数料</td>
+                                <td class="py-2 text-right">-¥${(fee1||0).toLocaleString('ja-JP', fmt)}</td>
+                                <td class="py-2 text-right">-¥${(feeLot||0).toLocaleString('ja-JP', fmt)}</td>
+                            </tr>
+                            <tr class="border-b theme-border theme-text-muted text-opacity-80">
+                                <td class="py-2">原価</td>
+                                <td class="py-2 text-right">-¥${Math.floor(item.cost1||0).toLocaleString('ja-JP', fmt)}</td>
+                                <td class="py-2 text-right">-¥${(costLot||0).toLocaleString('ja-JP', fmt)}</td>
+                            </tr>
+                            <tr class="font-bold text-base">
+                                <td class="py-3">利益</td>
+                                <td class="py-3 text-right ${pClass}">¥${Math.floor(item.profit1||0).toLocaleString('ja-JP', fmt)}</td>
+                                <td class="py-3 text-right ${pClass} text-lg">¥${(profitLot||0).toLocaleString('ja-JP', fmt)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="grid grid-cols-2 gap-2 theme-panel-dark p-3 rounded text-center mt-auto border theme-border">
+                        <div><div class="text-xs theme-text-muted mb-1">利益率</div><div class="font-bold text-xl font-mono">${item.profitMargin}%</div></div>
+                        <div><div class="text-xs theme-text-muted mb-1">原価率</div><div class="font-bold text-xl font-mono ff-text-gold">${item.costMargin}%</div></div>
+                    </div>
+                </div>
+            `);
+        });
+    }
+
+    // --- データ読み書き ---
+    function saveData() { localStorage.setItem('marketCalcDataFF14', JSON.stringify({ settings: state.settings, history: state.history })); }
+    function loadData() {
+        const saved = localStorage.getItem('marketCalcDataFF14');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                if (parsed.settings) state.settings = { ...state.settings, ...parsed.settings };
+                if (parsed.history) state.history = parsed.history;
+            } catch (e) { console.error("Failed to load data", e); }
+        }
+    }
+</script>
+</body>
+</html>
